@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import routes from "./Config/routes.js"
+import AuthContextProvider from "./Context/AuthContext.js"
+import { createMuiTheme, ThemeProvider } from "@material-ui/core"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+            main: '#60b7e9',
+            contrastText: '#ffffff'
+        },
+        secondary: {
+            main: '#f25050'
+        },
+    },
+})
+
+const App = () => {
+    return (
+        <ThemeProvider theme={ theme }>
+            <AuthContextProvider>
+                <Router>
+                    <Switch>
+                        {routes.map((route) => (
+                            <Route
+                                exact
+                                key={ route.path }
+                                path={ route.path }
+                                component={ route.component }
+                            />
+                        ))}
+                    </Switch>
+                </Router>
+            </AuthContextProvider>
+        </ThemeProvider>
+    );
 }
-
+ 
 export default App;
