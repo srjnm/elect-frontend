@@ -48,7 +48,7 @@ const styles = makeStyles((theme) => ({
     },
 }))
 
-const AdminElections = (props) => {
+const StudentElections = (props) => {
     const classes = styles()
 
     const { dispatch } = useContext(AuthContext)
@@ -118,19 +118,19 @@ const AdminElections = (props) => {
     // eslint-disable-next-line
     }, [props.render])
 
-    const handleViewElection = (id) => {
+    const handleApplyCandidate = (id) => {
         history.push(
             {
-                pathname: "/view",
+                pathname: "/candidate",
                 state: id,
             }
         )
     }
-    
-    const handleEditElection = (id) => {
+
+    const handleViewElection = (id) => {
         history.push(
             {
-                pathname: "/edit",
+                pathname: "/view",
                 state: id,
             }
         )
@@ -177,11 +177,14 @@ const AdminElections = (props) => {
                                         <TableCell align="center">
                                             {
                                                 (moment(election.locking_at, "YYYY-MM-DD HH:mm:ss ZZ z").toDate() > currentDate)?
-                                                    <Button className={[classes.electionButton, classes.befLockEButton]} color="action" style={{backgroundColor: "#ededed"}} onClick={() => handleEditElection(election.election_id)} variant="outlined">View/Edit Election</Button>
+                                                    <Button className={[classes.electionButton, classes.befLockEButton]} color="action" style={{backgroundColor: "#ededed"}} onClick={() => handleApplyCandidate(election.election_id)} variant="outlined">Enroll as Candidate</Button>
                                                     :(moment(election.starting_at, "YYYY-MM-DD HH:mm:ss ZZ z").toDate() > currentDate)?
                                                         <Button className={[classes.electionButton, classes.lockedButton]} color="success" style={{backgroundColor: "#e0ffe2", color: "#2e8f32"}} onClick={() => handleViewElection(election.election_id)} variant="outlined">View Election</Button>
                                                         :(moment(election.ending_at, "YYYY-MM-DD HH:mm:ss ZZ z").toDate() > currentDate)?
-                                                            <Button className={[classes.electionButton, classes.inProgressButton]} color="secondary" style={{backgroundColor: "#ffe6e6"}} variant="outlined">In Progress</Button>
+                                                            (typeof(election.voted) !== "undefined")?(election.voted === true)?
+                                                            <Button className={[classes.electionButton, classes.inProgressButton]} color="secondary" style={{backgroundColor: "#ffe6e6"}} variant="outlined">Vote</Button>
+                                                            :<Button className={[classes.electionButton, classes.inProgressButton]} color="secondary" style={{backgroundColor: "#ffe6e6"}} variant="outlined">In Progress</Button>
+                                                            :<Button className={[classes.electionButton, classes.inProgressButton]} color="secondary" style={{backgroundColor: "#ffe6e6"}} variant="outlined">In Progress</Button>
                                                             :<Button className={[classes.electionButton, classes.resultsButton]} color="primary" style={{backgroundColor: "#f0faff"}} onClick={() => handleViewResults(election.election_id)} variant="outlined">View Results</Button>
 
                                             }
@@ -221,4 +224,4 @@ const AdminElections = (props) => {
     );
 }
  
-export default AdminElections;
+export default StudentElections;

@@ -101,7 +101,11 @@ const OTP = () => {
                     role: res.data.role,
                 })
                 setSubmitError(false)
-                history.push("/admin")
+                if(res.data.role === "0"){
+                    history.push("/student")
+                } else {
+                    history.push("/admin")
+                }
             }
             else if(res.status === 400 || res.status === 401) {
                 setSubmitError(true)
@@ -126,7 +130,7 @@ const OTP = () => {
             <Grid container direction="column" className={classes.root}>
                 <Grid item xs="12" container>
                     <Grid item xs="12" md="8" className={classes.cover} justify="center" alignItems="center" container>
-                        <img src="https://electuploadstorage.blob.core.windows.net/assets/LandingPageArt.png" className={classes.image} alt="Login" />
+                        <img src="https://electstore.blob.core.windows.net/assets/LandingPageArt.png" className={classes.image} alt="Login" />
                     </Grid>
                     <Grid item xs="12" md="4" justify="center" container className={classes.form}>
                         <form noValidate autoComplete="off" onSubmit={ handleSubmit }>
@@ -146,7 +150,7 @@ const OTP = () => {
                                     />
                                 </Grid>
                                 <Grid item xs="12">
-                                    { submitIsLoading && <LinearProgress color="primary" style={{paddingRight: "4rem", paddingLeft: "4rem", paddingTop: "0.1rem", paddingBottom: "0.1rem"}} /> }
+                                    { submitIsLoading && <LinearProgress color="primary" style={{paddingRight: "4rem", paddingLeft: "4rem", paddingTop: "0.1rem", paddingBottom: "0.1rem", marginTop: "15px", marginBottom: "15px"}} /> }
                                     { !submitIsLoading &&
                                         <Button
                                             type="submit"

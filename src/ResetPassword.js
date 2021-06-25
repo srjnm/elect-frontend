@@ -180,7 +180,7 @@ const ResetPassword = () => {
                                             />
                                         </Grid>
                                         <Grid item xs="12">
-                                            { submitIsLoading && <LinearProgress color="primary" style={{paddingRight: "4rem", paddingLeft: "4rem", paddingTop: "0.1rem", paddingBottom: "0.1rem"}} /> }
+                                            { submitIsLoading && <LinearProgress color="primary" style={{paddingRight: "4rem", paddingLeft: "4rem", paddingTop: "0.1rem", paddingBottom: "0.1rem", marginTop: "15px", marginBottom: "15px"}} /> }
                                             { !submitIsLoading &&
                                                 <Button
                                                     type="submit"

@@ -123,7 +123,7 @@ const Admin = () => {
         e.preventDefault()
 
         if(file === null) {
-            setResponseTitle("Resgister Students")
+            setResponseTitle("Register Students")
             setResponse("Empty file!")
             setRegisterRespLoading(false)
             setResponseDialog(true)
@@ -247,7 +247,7 @@ const Admin = () => {
                                         variant="contained"
                                         style={{borderBottomLeftRadius: 0, borderTopLeftRadius: 0}}
                                         target="_blank"
-                                        href="https://electuploadstorage.blob.core.windows.net/assets/ELECT-RegisterStudentsTemplate.xlsx"
+                                        href="https://electstore.blob.core.windows.net/assets/ELECT-RegisterStudentsTemplate.xlsx"
                                     >
                                         <CloudDownload color="white"></CloudDownload>
                                     </Button>
