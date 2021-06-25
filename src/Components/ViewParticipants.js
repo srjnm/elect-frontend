@@ -34,11 +34,12 @@ const ViewParticipants = (props) => {
                 <Table>
                     <TableHead className={classes.tbhead}>
                         <TableRow>
-                            <TableCell align="center" colSpan="2" style={{ fontWeight: 600, fontSize: 16}}>PARTICIPANTS</TableCell>
+                            <TableCell align="center" colSpan="3" style={{ fontWeight: 600, fontSize: 16}}>PARTICIPANTS</TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell align="center" style={{ fontWeight: 600, }}>REGISTER NUMBER</TableCell>
                             <TableCell align="center" style={{ fontWeight: 600, }}>NAME</TableCell>
+                            <TableCell align="center" style={{ fontWeight: 600, }}>VOTED</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

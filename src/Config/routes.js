@@ -4,6 +4,7 @@ import CreateElection from "../Components/CreateElectionDialog";
 import Header from "../Components/Header";
 import EditElection from "../EditElection";
 import EnrollCandidate from "../EnrollCandidate";
+import EnrollUpload from "../EnrollUpload";
 import Login from "../Login";
 import OTP from "../OTP";
 import ResetPassword from "../ResetPassword";
@@ -74,6 +75,10 @@ const routes = [
     {
         path: "/student",
         component: Student,
+    },
+    {
+        path: "/enroll",
+        component: EnrollUpload,
     }
 ]
 

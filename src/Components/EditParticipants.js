@@ -72,7 +72,7 @@ const EditParticipants = (props) => {
 
         await getElection()
     // eslint-disable-next-line
-    }, [])
+    }, [props.addedParticipant])
 
     async function handleDelete(id) {
         await axios.delete("https://e1ect.herokuapp.com/api/participant",{

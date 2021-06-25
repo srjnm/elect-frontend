@@ -59,6 +59,7 @@ const EditElection = (props) => {
     const [participantsRespLoading, setParticipantsRespLoading] = useState(false)
     const [file, setFile] = useState(null)
     const [uploadComplete, setUploadComplete] = useState(false)
+    const [addedParticipant, setAddedParticipant] = useState(false)
 
     const getElection = async () => {
         axios.get(
@@ -185,6 +186,7 @@ const EditElection = (props) => {
             setUploadComplete(false)
             setFile(null)
             setResponseDialog(true)
+            setAddedParticipant(!addedParticipant)
         }).catch((error) => {
             if(typeof error !== 'undefined') {
                 if(error.status === 400){
@@ -327,7 +329,7 @@ const EditElection = (props) => {
                     <EditCandidates electionId={props.location.state} />
                 </Grid>
                 <Grid item xs="12" align="center">
-                    <EditParticipants electionId={props.location.state} />
+                    <EditParticipants electionId={props.location.state} addedParticipant={addedParticipant} />
                 </Grid>
                 <Grid item xs="12" align="center">
                     <div style={{maxWidth: "400px", minWidth: "400px"}}>

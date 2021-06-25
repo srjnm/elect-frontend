@@ -17,7 +17,7 @@ const styles = makeStyles((theme) => ({
         maxHeight: "25px",
     },
     befLockEButton: {
-        minWidth: "140px",
+        minWidth: "150px",
     },
     lockedButton: {
         minWidth: "105px",

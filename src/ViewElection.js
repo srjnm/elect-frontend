@@ -139,11 +139,11 @@ const ViewElection = (props) => {
                                 <ViewCandidates candidates={election.candidates} />
                             </Grid>
                             :
-                            <Grid item container>
-                                <Grid item xs="12" md="4" align="center">
+                            <Grid item container spacing="4">
+                                <Grid item xs="12" lg="4" align="center">
                                     <ViewParticipants participants={election.participants} />
                                 </Grid>
-                                <Grid item xs="12" md="8" align="center">
+                                <Grid item xs="12" lg="8" align="center">
                                     <ViewCandidates candidates={election.candidates} />
                                 </Grid>
                             </Grid>
