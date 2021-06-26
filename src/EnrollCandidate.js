@@ -10,6 +10,7 @@ import { useState, useContext, useEffect } from "react"
 import { useHistory } from "react-router"
 import axios from 'axios'
 import moment from "moment"
+import EnrollCandidateDialog from './Components/EnrollCandidateDialog';
 
 const useStyles = makeStyles((theme) => ({
     box: {
@@ -22,7 +23,9 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('md')]: {
             margin:'4rem',
             marginTop: '3rem',
-            padding:'2rem'
+            padding:'3rem',
+            paddingLeft: '6rem',
+            paddingRight: '4rem'
         },
     },
     content:{
@@ -53,6 +56,7 @@ export default function EnrollCandidate(props) {
     const [election, setElection] = useState(null)
     const [loading, setLoading] = useState(true)
     const [update, setUpdate] = useState(false)
+    const [enrollCandidateDialog, setEnrollCandidateDialog] = useState(false)
 
     const getElection = async () => {
         axios.get(
@@ -95,7 +99,7 @@ export default function EnrollCandidate(props) {
             <Paper className={classes.box}>
                 {
                     (loading)?
-                    <div style={{height: "100%",}}>
+                    <div style={{height: "80vh",}}>
                         <Grid container alignItems="center" style={{height: "100%"}}>
                             <Grid item xs="12" align="center">
                                 <CircularProgress variant="indeterminate" size={50} />
@@ -141,6 +145,9 @@ export default function EnrollCandidate(props) {
                     </Grid>
                 }
             </Paper>
+            {
+                !loading && <EnrollCandidateDialog dialog={enrollCandidateDialog} setDialog={setEnrollCandidateDialog} electionId={election.election_id} title={election.title} />
+            }
         </div>
     )
 }

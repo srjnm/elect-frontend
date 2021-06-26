@@ -13,14 +13,12 @@ const useStyles = makeStyles((theme) => ({
     headings:{
         fontWeight:'120px',
         marginBottom: '10px',
-        fontFamily: 'Helvetica',
     },
     input: {
         display: "none"
       },
     upld:{
         borderRadius:'10px',
-        fontFamily: 'Helvetica',
         paddingTop: '12px',
         paddingBottom:'12px',
         paddingLeft:'12px',
