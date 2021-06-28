@@ -111,7 +111,7 @@ const ViewCandidates = (props) => {
                                                 VIEW
                                             </Button>
                                         </TableCell>
-                                        <TableCell align="center">{ (candidate.approved)?<VerifiedUser color="#32a852" />:<RemoveCircle color="secondary" /> }</TableCell>
+                                        <TableCell align="center">{ (candidate.approved)?<VerifiedUser style={{color: "#32a852"}} />:<RemoveCircle color="secondary" /> }</TableCell>
                                     </TableRow>
                                 )) : (
                                     <TableRow>

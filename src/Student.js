@@ -5,6 +5,7 @@ import { AuthContext } from './Context/AuthContext'
 import { Button, Grid, makeStyles, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@material-ui/core'
 import Header from './Components/Header'
 import StudentElections from './Components/StudentElectionList'
+import { useEffect } from 'react'
 
 const styles = makeStyles((theme) => ({
     root: {
@@ -110,6 +111,20 @@ const Student = () => {
             return Promise.reject(error.config)
         }
     )
+
+    useEffect(() => {
+        var con = new WebSocket("ws://e1ect.herokuapp.com/api/ws/election")
+        con.addEventListener("message", async function(e){
+            await setUpdate(update => !update)
+        })
+
+        window.addEventListener("unload", function () {
+            con.onclose = function () {
+                if(con.readyState === WebSocket.OPEN)
+                    con.close()
+            }
+        })
+    }, [])
 
     const handleResponseDialogClose = () => {
         setResponseDialog(false)

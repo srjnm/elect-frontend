@@ -35,6 +35,55 @@ const Results = (props) => {
     const [results, setResults] = useState(null)
     const [loading, setLoading] = useState(true)
 
+    const customAxios = axios.create({
+        withCredentials: true,
+    })
+
+    const refresh = async () => {
+        await customAxios.post(
+            "https://e1ect.herokuapp.com/refresh",
+        ).then((resp) => {
+            if(resp.status === 200){
+                return true
+            }
+        }).then((updt) => {
+            // console.log(update)
+            // setUpdate(!update)
+            // console.log(update)
+        }).catch((er) => {
+            console.log(er)
+            if(typeof er.response !== 'undefined') {
+                if(er.response.status === 511) {
+                    dispatch({
+                        type: "LOGOUT_SUCCESS",
+                    })
+                    history.push("/")
+                }
+            }
+        })
+    }
+
+    axios.interceptors.response.use(
+        null,
+        async (error) => {
+            if(error.response) {
+                if(error.response.status === 406) {
+                    await refresh()
+                    console.log(error.config)
+                    return axios.request(error.config)
+                }
+                else if(error.response.status === 511) {
+                    dispatch({
+                        type: "LOGOUT_SUCCESS",
+                    })
+                    history.push("/")
+                }
+            }
+            
+            return Promise.reject(error.config)
+        }
+    )
+
     const getElectionResults = async () => {
         axios.get(
             "https://e1ect.herokuapp.com/api/results/"+props.location.state,

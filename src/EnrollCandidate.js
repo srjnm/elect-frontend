@@ -11,9 +11,11 @@ import { useHistory } from "react-router"
 import axios from 'axios'
 import moment from "moment"
 import EnrollCandidateDialog from './Components/EnrollCandidateDialog';
+import YourCandidateEntry from './Components/YourCandidateEntry';
 
 const useStyles = makeStyles((theme) => ({
     box: {
+        backgroundColor: "#fefefe",
         [theme.breakpoints.down('md')]: {
             margin: '2rem',
             padding: '1rem',
@@ -71,7 +73,6 @@ export default function EnrollCandidate(props) {
         }).then((data) => {
             setElection(data)
             setLoading(false)
-            setUpdate(!update)
         }).catch((err) => {
             if(typeof err !== 'undefined') {
                 if(err.status === 511){
@@ -92,6 +93,10 @@ export default function EnrollCandidate(props) {
         getElection()
     // eslint-disable-next-line
     }, [update])
+
+    const handleEnrollAsCandidate = () => {
+        setEnrollCandidateDialog(true)
+    }
 
     return (
         <div>
@@ -137,16 +142,20 @@ export default function EnrollCandidate(props) {
                             <h3 className={classes.headings}  >Candidates</h3>
                             <ViewCandidates candidates={election.candidates} />
                             <br/>
-                            <Button variant="contained" className={classes.btn} color="primary" disableElevation>
-                            + ENROLL AS CANDIDATE
-                            </Button>
-
+                            {
+                                (election.candidate.candidate_id !== "")?
+                                <YourCandidateEntry candidate={election.candidate} />
+                                :
+                                <Button variant="contained" className={classes.btn} color="primary" onClick={() => { handleEnrollAsCandidate() }} disableElevation>
+                                + ENROLL AS CANDIDATE
+                                </Button>
+                            }
                         </Grid>
                     </Grid>
                 }
             </Paper>
             {
-                !loading && <EnrollCandidateDialog dialog={enrollCandidateDialog} setDialog={setEnrollCandidateDialog} electionId={election.election_id} title={election.title} />
+                !loading && <EnrollCandidateDialog dialog={enrollCandidateDialog} setDialog={setEnrollCandidateDialog} electionId={election.election_id} title={election.title} render={update} setRender={setUpdate} />
             }
         </div>
     )

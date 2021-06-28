@@ -1,5 +1,4 @@
 import { makeStyles, Dialog, DialogTitle, DialogContent, DialogActions, TablePagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button } from "@material-ui/core";
-import { RemoveCircle, VerifiedUser } from "@material-ui/icons";
 import { useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
@@ -23,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const ViewCandidates = (props) => {
+const ViewCandidatesForStudents = (props) => {
     const [page, setPage] = useState(0)
     const [rowsPerPage, setRowsPerPage] = useState(3)
     const [imageDialog, setImageDialog] = useState(false)
@@ -86,16 +85,6 @@ const ViewCandidates = (props) => {
                                                 variant="contained"
                                                 disableElevation
                                                 className={classes.viewButton}
-                                                onClick={() => {openImageDialog(candidate.id_proof, "ID Proof")}}
-                                            >
-                                                VIEW
-                                            </Button>
-                                        </TableCell>
-                                        <TableCell align="center">
-                                            <Button
-                                                variant="contained"
-                                                disableElevation
-                                                className={classes.viewButton}
                                                 onClick={() => {openImageDialog(candidate.display_picture, "Display Picture")}}
                                             >
                                                 VIEW
@@ -111,7 +100,6 @@ const ViewCandidates = (props) => {
                                                 VIEW
                                             </Button>
                                         </TableCell>
-                                        <TableCell align="center">{ (candidate.approved)?<VerifiedUser color="#32a852" />:<RemoveCircle color="secondary" /> }</TableCell>
                                     </TableRow>
                                 )) : (
                                     <TableRow>
@@ -155,4 +143,4 @@ const ViewCandidates = (props) => {
     );
 }
  
-export default ViewCandidates;
+export default ViewCandidatesForStudents;

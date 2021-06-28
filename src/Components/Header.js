@@ -9,7 +9,7 @@ import { AuthContext } from '../Context/AuthContext'
 const styles = makeStyles((theme) => ({
     root: {
         minHeight: "60px",
-        backgroundColor: "#f9f9f9",
+        backgroundColor: "#fdfdfd",
         boxShadow: "0px 0px 52px 12px rgba(0,0,0,0.06)",
         height: "10%",
         width: "100%",
@@ -125,7 +125,7 @@ const Header = (props) => {
                         keepMounted
                         open={Boolean(menu)}
                         onClose={handleMenuClose}
-                        PaperProps={{variant: "outlined", color: "#f9f9f9", elevation: 0}}
+                        PaperProps={{variant: "outlined", color: "#fdfdfd", elevation: 0}}
                     >
                         <MenuItem onClick={handleMenuClose}>Change Password</MenuItem>
                         <MenuItem onClick={handleLogout}>Logout</MenuItem>

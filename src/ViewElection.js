@@ -6,6 +6,7 @@ import Header from "./Components/Header"
 import axios from 'axios'
 import moment from "moment"
 import ViewParticipants from "./Components/ViewParticipants"
+import ViewCandidatesForStudents from "./Components/ViewCandidatesForStudents"
 import ViewCandidates from "./Components/ViewCandidates"
 
 const styles = makeStyles((theme) => ({
@@ -50,6 +51,55 @@ const ViewElection = (props) => {
 
     const [election, setElection] = useState(null)
     const [loading, setLoading] = useState(true)
+
+    const customAxios = axios.create({
+        withCredentials: true,
+    })
+
+    const refresh = async () => {
+        await customAxios.post(
+            "https://e1ect.herokuapp.com/refresh",
+        ).then((resp) => {
+            if(resp.status === 200){
+                return true
+            }
+        }).then((updt) => {
+            // console.log(update)
+            // setUpdate(!update)
+            // console.log(update)
+        }).catch((er) => {
+            console.log(er)
+            if(typeof er.response !== 'undefined') {
+                if(er.response.status === 511) {
+                    dispatch({
+                        type: "LOGOUT_SUCCESS",
+                    })
+                    history.push("/")
+                }
+            }
+        })
+    }
+
+    axios.interceptors.response.use(
+        null,
+        async (error) => {
+            if(error.response) {
+                if(error.response.status === 406) {
+                    await refresh()
+                    console.log(error.config)
+                    return axios.request(error.config)
+                }
+                else if(error.response.status === 511) {
+                    dispatch({
+                        type: "LOGOUT_SUCCESS",
+                    })
+                    history.push("/")
+                }
+            }
+            
+            return Promise.reject(error.config)
+        }
+    )
 
     useEffect(() => {
         if(props.location.state === "") {
@@ -136,7 +186,7 @@ const ViewElection = (props) => {
                         {
                             (user.role === "0")?
                             <Grid item xs="12" align="center">
-                                <ViewCandidates candidates={election.candidates} />
+                                <ViewCandidatesForStudents candidates={election.candidates} />
                             </Grid>
                             :
                             <Grid item container spacing="4">

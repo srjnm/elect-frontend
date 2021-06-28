@@ -11,7 +11,6 @@ import ResetPassword from "../ResetPassword";
 import Results from "../Results";
 import SetPassword from "../SetPassword";
 import Student from "../Student";
-import SuperAdmin from "../SuperAdmin";
 import ViewElection from "../ViewElection";
 import WS from "../WS";
 
@@ -63,10 +62,6 @@ const routes = [
     {
         path: "/result",
         component: Results,
-    },
-    {
-        path: "/superadmin",
-        component: SuperAdmin,
     },
     {
         path: "/candidate",
