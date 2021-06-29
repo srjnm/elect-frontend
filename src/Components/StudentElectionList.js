@@ -28,6 +28,9 @@ const styles = makeStyles((theme) => ({
     inProgressButton: {
         minWidth: "95px",
     },
+    vote: {
+        minWidth: "60px",
+    },
     loading: {
         marginTop: "28vh",
         [theme.breakpoints.down('md')]: {
@@ -145,6 +148,15 @@ const StudentElections = (props) => {
         )
     }
 
+    const handleInProgress = (id) => {
+        history.push(
+            {
+                pathname: "/preview",
+                state: id,
+            }
+        )
+    }
+
     return (
         <div>
             { 
@@ -182,9 +194,9 @@ const StudentElections = (props) => {
                                                         <Button className={[classes.electionButton, classes.lockedButton]} color="success" style={{backgroundColor: "#e0ffe2", color: "#2e8f32"}} onClick={() => handleViewElection(election.election_id)} variant="outlined">View Election</Button>
                                                         :(moment(election.ending_at, "YYYY-MM-DD HH:mm:ss ZZ z").toDate() > currentDate)?
                                                             (typeof(election.voted) !== "undefined")?(election.voted === true)?
-                                                            <Button className={[classes.electionButton, classes.inProgressButton]} color="secondary" style={{backgroundColor: "#ffe6e6"}} variant="outlined">Vote</Button>
+                                                            <Button className={[classes.electionButton, classes.vote]} color="secondary" style={{backgroundColor: "#ffe6e6"}} onClick={() => handleInProgress(election.election_id)} variant="outlined">Vote</Button>
                                                             :<Button className={[classes.electionButton, classes.inProgressButton]} color="secondary" style={{backgroundColor: "#ffe6e6"}} variant="outlined">In Progress</Button>
-                                                            :<Button className={[classes.electionButton, classes.inProgressButton]} color="secondary" style={{backgroundColor: "#ffe6e6"}} variant="outlined">In Progress</Button>
+                                                            :<Button className={[classes.electionButton, classes.vote]} color="secondary" style={{backgroundColor: "#ffe6e6"}} onClick={() => handleInProgress(election.election_id)} variant="outlined">Vote</Button>
                                                             :<Button className={[classes.electionButton, classes.resultsButton]} color="primary" style={{backgroundColor: "#f0faff"}} onClick={() => handleViewResults(election.election_id)} variant="outlined">View Results</Button>
 
                                             }
