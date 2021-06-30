@@ -9,12 +9,7 @@ import { useEffect } from 'react'
 
 const styles = makeStyles((theme) => ({
     root: {
-        [theme.breakpoints.down('md')]: {
-            paddingLeft: "3vw",
-        },
-        [theme.breakpoints.up('md')]: {
-            paddingLeft: "10vw",
-        },
+        
     },
     upload: {
         letterSpacing: 0.6,
@@ -133,13 +128,14 @@ const Student = () => {
     return (
         <div>
             <Header />
-            {   <div>
-                    <Grid container direction="column" alignItems="flex-start" className={classes.root}>
-                        <Grid item xs="12" style={{paddingRight: "7vw", marginTop: "3rem"}}>
+            {   
+                <Grid container className={classes.root}>
+                    <Grid item xs="12" align="center">
+                        <div style={{margin: "3rem"}}>
                             <StudentElections render={update} />
-                        </Grid>
+                        </div>
                     </Grid>
-                </div>
+                </Grid>
             }
             <Dialog
                 open={responseDialog}

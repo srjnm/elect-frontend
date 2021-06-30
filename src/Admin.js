@@ -11,12 +11,7 @@ import AdminElections from './Components/AdminElectionList'
 
 const styles = makeStyles((theme) => ({
     root: {
-        [theme.breakpoints.down('md')]: {
-            paddingLeft: "3vw",
-        },
-        [theme.breakpoints.up('md')]: {
-            paddingLeft: "10vw",
-        },
+
     },
     upload: {
         letterSpacing: 0.6,
@@ -255,27 +250,31 @@ const Admin = () => {
                             </div>
                         </Grid>
                         <Grid item xs="12" alignItems="center">
-                            <RegisteredStudents render={update} />
+                            <div style={{margin: "3rem"}}>
+                                <RegisteredStudents render={update} />
+                            </div>
                         </Grid>
                     </Grid>
                 </div>
                 :
                 <div>
-                    <Grid container direction="column" alignItems="flex-start" className={classes.root}>
+                    <Grid container className={classes.root}>
                         <Grid item xs="12">
-                            <div style={{paddingLeft: 25, marginRight: -25, paddingTop: 10, paddingBottom: 25}}>
+                            <div style={{paddingLeft: "3rem"}}>
                                 <Button
                                     color="primary"
                                     variant="outlined"
                                     onClick={()=>{setCreateElectionDialog(true)}}
-                                    style={{backgroundColor: "white", marginTop: "20%", width: "160px"}}
+                                    style={{backgroundColor: "white", marginTop: "1.5rem", width: "160px"}}
                                 >
                                     Create Election
                                 </Button>
                             </div>
                         </Grid>
-                        <Grid item xs="12" style={{paddingRight: "7vw"}}>
-                            <AdminElections render={update} />
+                        <Grid item xs="12" align="center">
+                            <div style={{margin: "3rem", marginTop: "1rem"}}>
+                                <AdminElections render={update} />
+                            </div>
                         </Grid>
                     </Grid>
                 </div>

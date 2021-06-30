@@ -32,21 +32,13 @@ const styles = makeStyles((theme) => ({
         minWidth: "60px",
     },
     loading: {
-        marginTop: "28vh",
-        [theme.breakpoints.down('md')]: {
-            marginLeft: "45vw",
-        },
-        [theme.breakpoints.up('md')]: {
-            marginLeft: "31vw",
-        },
+        margin: "auto",
+        marginTop: "26vh",
     },
     table: {
         minWidth: 800,
     },
     tableContainer: {
-        [theme.breakpoints.down('sm')]: {
-            marginLeft: "2vw",
-        },
         marginBottom: "5vh",
     },
 }))

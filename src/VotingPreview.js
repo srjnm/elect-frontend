@@ -1,11 +1,12 @@
 import Header from "./Components/Header"
 import axios from 'axios'
 import moment from "moment"
-import { CircularProgress, Grid, makeStyles, Paper, Typography, Button, Card, CardActionArea, CardMedia, CardContent, Dialog, DialogActions, DialogTitle,DialogContent } from "@material-ui/core"
+import { CircularProgress, Grid, makeStyles, Paper, Typography, Button, Card, CardActionArea, CardMedia, CardContent, Dialog, DialogActions, DialogTitle,DialogContent, createMuiTheme } from "@material-ui/core"
 import { useState, useContext, useEffect } from "react"
 import { useHistory } from "react-router"
 import { AuthContext } from './Context/AuthContext'
 import { Send } from "@material-ui/icons"
+import { MuiThemeProvider } from "@material-ui/core/styles";
 
 const styles = makeStyles((theme) => ({
     paper: {
@@ -32,6 +33,24 @@ const styles = makeStyles((theme) => ({
         fontWeight: 900,
     }
 }))
+
+const theme = createMuiTheme({
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 600,
+        md: 960,
+        lg: 1280,
+        xl: 1500,
+      },
+    },
+    palette: {
+        primary: {
+            main: '#60b7e9',
+            contrastText: '#ffffff'
+        },
+    },
+})
 
 const VotingPreview = (props) => {
     const classes = styles()
@@ -195,33 +214,35 @@ const VotingPreview = (props) => {
                                                 CANDIDATES
                                             </Typography>
                                         </Grid>
-                                        <Grid item xs="12" align="center" style={{padding: "1rem", paddingLeft: "4rem", paddingRight: "4rem"}}>
-                                            <Grid item container spacing="4" justify="center">
-                                                {
-                                                    election.candidates.map((candidate) => (
-                                                        <Grid item xs="6" md="4">
-                                                            <Card style={{height: "18rem", width: "11rem"}}>
-                                                                <CardActionArea>
-                                                                    <CardMedia
-                                                                        style={{paddingTop: "100%"}}
-                                                                        title={candidate.first_name}
-                                                                        image={candidate.display_picture}
-                                                                    />
-                                                                </CardActionArea>
-                                                                <CardContent>
-                                                                    <Typography style={{fontSize: 18, fontWeight: 700, marginTop: "-0.7rem"}}>
-                                                                        {candidate.first_name.toUpperCase()+" "+candidate.last_name.toUpperCase()}
-                                                                    </Typography>
-                                                                    <Typography style={{fontSize: 16, fontWeight: 300, marginTop: "-0.4rem", marginBottom: "0.5rem"}}>
-                                                                        {candidate.register_no}
-                                                                    </Typography>
-                                                                    <Button color="primary" variant="contained" style={{fontWeight: 700}} onClick={() => {openImageDialog(candidate.poster, candidate.first_name+" "+candidate.last_name+"'s Poster")}} disableElevation>VIEW POSTER</Button>
-                                                                </CardContent>
-                                                            </Card>
-                                                        </Grid>
-                                                    ))
-                                                }
-                                            </Grid>
+                                        <Grid item xs="12" align="center" style={{padding: "1rem", paddingLeft: "2rem", paddingRight: "2rem"}}>
+                                            <MuiThemeProvider theme={theme}>
+                                                <Grid item container spacing="4" justify="center">
+                                                    {
+                                                        election.candidates.map((candidate) => (
+                                                            <Grid item xs="12" sm="6" md="4" lg="3" xl="2">
+                                                                <Card style={{height: "18rem", width: "11rem"}}>
+                                                                    <CardActionArea>
+                                                                        <CardMedia
+                                                                            style={{paddingTop: "100%"}}
+                                                                            title={candidate.first_name}
+                                                                            image={candidate.display_picture}
+                                                                        />
+                                                                    </CardActionArea>
+                                                                    <CardContent>
+                                                                        <Typography style={{fontSize: 18, fontWeight: 700, marginTop: "-0.7rem"}}>
+                                                                            {candidate.first_name.toUpperCase()+" "+candidate.last_name.toUpperCase()}
+                                                                        </Typography>
+                                                                        <Typography style={{fontSize: 16, fontWeight: 300, marginTop: "-0.4rem", marginBottom: "0.5rem"}}>
+                                                                            {candidate.register_no}
+                                                                        </Typography>
+                                                                        <Button color="primary" variant="contained" style={{fontWeight: 700}} onClick={() => {openImageDialog(candidate.poster, candidate.first_name+" "+candidate.last_name+"'s Poster")}} disableElevation>VIEW POSTER</Button>
+                                                                    </CardContent>
+                                                                </Card>
+                                                            </Grid>
+                                                        ))
+                                                    }
+                                                </Grid>
+                                            </MuiThemeProvider>
                                         </Grid>
                                         <Grid item xs="12" align="center">
                                             <Button className={classes.proceed}><span style={{fontSize: 17, marginLeft: "0.4rem", marginRight: "0.8rem", marginTop: "2px"}}>PROCEED TO VOTE</span><Send style={{fontSize: 18}} color="white" /></Button>
