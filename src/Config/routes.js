@@ -12,6 +12,7 @@ import Results from "../Results";
 import SetPassword from "../SetPassword";
 import Student from "../Student";
 import ViewElection from "../ViewElection";
+import Voting from "../Voting";
 import VotingPreview from "../VotingPreview";
 import WS from "../WS";
 
@@ -79,6 +80,10 @@ const routes = [
     {
         path: "/preview",
         component: VotingPreview,
+    },
+    {
+        path: "/vote",
+        component: Voting
     }
 ]
 

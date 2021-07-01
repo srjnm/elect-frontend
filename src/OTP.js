@@ -121,6 +121,14 @@ const OTP = () => {
                     setSubmitError(true)
                 }
             }
+            if(typeof err.response !== 'undefined') {
+                if(er.response.status === 511) {
+                    dispatch({
+                        type: "LOGOUT_SUCCESS",
+                    })
+                    history.push("/")
+                }
+            }
             setSubmitIsLoading(false)
         })
     }

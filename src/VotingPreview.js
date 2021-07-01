@@ -157,11 +157,20 @@ const VotingPreview = (props) => {
     // eslint-disable-next-line
     }, [])
 
+    const handleProceed = () => {
+        history.push(
+            {
+                pathname: "/vote",
+                state: election,
+            }
+        )
+    }
+
     return (
         <div>
             <Header />
             <Paper className={classes.paper}>
-            { 
+                { 
                     loading && <div style={{height: "60vh",}}>
                         <Grid container alignItems="center" style={{height: "100%"}}>
                             <Grid item xs="12" align="center">
@@ -245,7 +254,7 @@ const VotingPreview = (props) => {
                                             </MuiThemeProvider>
                                         </Grid>
                                         <Grid item xs="12" align="center">
-                                            <Button className={classes.proceed}><span style={{fontSize: 17, marginLeft: "0.4rem", marginRight: "0.8rem", marginTop: "2px"}}>PROCEED TO VOTE</span><Send style={{fontSize: 18}} color="white" /></Button>
+                                            <Button onClick={()=>{handleProceed()}} className={classes.proceed}><span style={{fontSize: 17, marginLeft: "0.4rem", marginRight: "0.8rem", marginTop: "2px"}}>PROCEED TO VOTE</span><Send style={{fontSize: 18}} color="white" /></Button>
                                         </Grid>
                                     </Grid>
                                 </div>

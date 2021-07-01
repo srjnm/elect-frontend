@@ -17,23 +17,23 @@ const CreateElectionDialog = (props) => {
     const validationSchema = Yup.object({
         title: Yup
             .string()
-            .required(),
+            .required("this is a required field"),
         starting_at: Yup
             .date()
             .min(new Date(), "election can't be started in the past")
-            .required(),
+            .required("this is a required field"),
         ending_at: Yup
             .date()
             .min(Yup.ref('starting_at'), "election cannot end before starting")
-            .required(),
+            .required("this is a required field"),
         locking_at: Yup
             .date()
             .min(new Date(), "election can't be locked in the past")
             .max(Yup.ref('starting_at'), "election cannot be locked after starting")
-            .required(),
+            .required("this is a required field"),
         gender_specific: Yup
             .boolean()
-            .required(),
+            .required("this is a required field"),
     })
 
     const handleCreateElection = (values) => {

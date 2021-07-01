@@ -95,7 +95,7 @@ const AdminElections = (props) => {
                             }
                         }
                     }
-                    else if(err.status === 511){
+                    else if(err.status === 511 || err.status === 401){
                         dispatch({
                             type: "LOGOUT_SUCCESS",
                         })

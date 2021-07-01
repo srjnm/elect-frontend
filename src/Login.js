@@ -126,11 +126,12 @@ const Login = (props) => {
             setLoginIsLoading(false)
         })
         .catch((err) => {
-            console.log(err.response)
-            if(err.response) {
-                if(err.response.status === 400) {
-                    setError(err.response.data.message)
-                    setLoginError(true)
+            if(err) {
+                if(err.response) {
+                    if(err.response.status === 400) {
+                        setError(err.response.data.message)
+                        setLoginError(true)
+                    }
                 }
             }
             setLoginIsLoading(false)

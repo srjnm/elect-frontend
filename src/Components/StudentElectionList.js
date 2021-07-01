@@ -80,6 +80,12 @@ const StudentElections = (props) => {
                     setisElectionsLoading(true)
                     return res.data
                 }
+                if(res.status === 401) {
+                    dispatch({
+                        type: "LOGOUT_SUCCESS",
+                    })
+                    history.push("/")
+                }
             }).then((data) => {
                 if (data === null) {
                     setElections('')
@@ -98,7 +104,7 @@ const StudentElections = (props) => {
                             }
                         }
                     }
-                    else if(err.status === 511){
+                    else if(err.status === 511 || err.status === 401){
                         dispatch({
                             type: "LOGOUT_SUCCESS",
                         })

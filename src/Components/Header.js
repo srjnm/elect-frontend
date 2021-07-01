@@ -5,6 +5,7 @@ import AccountCircle from "@material-ui/icons/AccountCircle"
 import { useState, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { AuthContext } from '../Context/AuthContext'
+import ChangePasswordDialog from './ChangePasswordDialog'
 
 const styles = makeStyles((theme) => ({
     root: {
@@ -45,6 +46,7 @@ const Header = (props) => {
     const history = useHistory()
 
     const [menu, setMenu] = useState(null)
+    const [changePassword, setChangePassword] = useState(false)
     const [register, setRegister] = useState(false)
     /*eslint-disable */
 
@@ -54,6 +56,10 @@ const Header = (props) => {
 
     const handleMenuClose = () => {
         setMenu(null)
+    }
+
+    const handleChangePassword = () => {
+        setChangePassword(true)
     }
 
     const handleLogout = (e) => {
@@ -127,7 +133,7 @@ const Header = (props) => {
                         onClose={handleMenuClose}
                         PaperProps={{variant: "outlined", color: "#fdfdfd", elevation: 0}}
                     >
-                        <MenuItem onClick={handleMenuClose}>Change Password</MenuItem>
+                        <MenuItem onClick={handleChangePassword}>Change Password</MenuItem>
                         <MenuItem onClick={handleLogout}>Logout</MenuItem>
                     </Menu>
                 </Grid>
@@ -155,6 +161,7 @@ const Header = (props) => {
                     </Button>
                 </div>
             }
+            <ChangePasswordDialog dialog={changePassword} setDialog={setChangePassword} />
         </div>
     );
 }
