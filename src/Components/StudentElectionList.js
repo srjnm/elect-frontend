@@ -146,6 +146,15 @@ const StudentElections = (props) => {
         )
     }
 
+    const handleVoted = (id) => {
+        history.push(
+            {
+                pathname: "/view",
+                state: id,
+            }
+        )
+    }
+
     const handleInProgress = (id) => {
         history.push(
             {
@@ -192,8 +201,8 @@ const StudentElections = (props) => {
                                                         <Button className={[classes.electionButton, classes.lockedButton]} color="success" style={{backgroundColor: "#e0ffe2", color: "#2e8f32"}} onClick={() => handleViewElection(election.election_id)} variant="outlined">View Election</Button>
                                                         :(moment(election.ending_at, "YYYY-MM-DD HH:mm:ss ZZ z").toDate() > currentDate)?
                                                             (typeof(election.voted) !== "undefined")?(election.voted === true)?
-                                                            <Button className={[classes.electionButton, classes.vote]} color="secondary" style={{backgroundColor: "#ffe6e6"}} onClick={() => handleInProgress(election.election_id)} variant="outlined">Vote</Button>
-                                                            :<Button className={[classes.electionButton, classes.inProgressButton]} color="secondary" style={{backgroundColor: "#ffe6e6"}} variant="outlined">In Progress</Button>
+                                                            <Button className={[classes.electionButton, classes.vote]} color="secondary" style={{backgroundColor: "#ffe6e6"}} onClick={() => handleVoted(election.election_id)} variant="outlined">Voted</Button>
+                                                            :<Button className={[classes.electionButton, classes.inProgressButton]} color="secondary" style={{backgroundColor: "#ffe6e6"}} onClick={() => handleInProgress(election.election_id)} variant="outlined">Vote</Button>
                                                             :<Button className={[classes.electionButton, classes.vote]} color="secondary" style={{backgroundColor: "#ffe6e6"}} onClick={() => handleInProgress(election.election_id)} variant="outlined">Vote</Button>
                                                             :<Button className={[classes.electionButton, classes.resultsButton]} color="primary" style={{backgroundColor: "#f0faff"}} onClick={() => handleViewResults(election.election_id)} variant="outlined">View Results</Button>
 

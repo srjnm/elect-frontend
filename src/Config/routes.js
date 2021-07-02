@@ -1,7 +1,4 @@
 import Admin from "../Admin";
-import AdminResults from "../AdminResults";
-import CreateElection from "../Components/CreateElectionDialog";
-import Header from "../Components/Header";
 import EditElection from "../EditElection";
 import EnrollCandidate from "../EnrollCandidate";
 import EnrollUpload from "../EnrollUpload";
@@ -14,77 +11,78 @@ import Student from "../Student";
 import ViewElection from "../ViewElection";
 import Voting from "../Voting";
 import VotingPreview from "../VotingPreview";
-import WS from "../WS";
 
 const routes = [
     {
-        path: "/",
-        component: Login
-    },
-    {
-        path: "/otp",
-        component: OTP
-    },
-    {
-        path: "/resetpassword/:token",
-        component: ResetPassword
-    },
-    {
-        path: "/verify/:token",
-        component: SetPassword
-    },
-    {
-        path: "/admin",
-        component: Admin
-    },
-    {
-        path: "/header",
-        component: Header
-    },
-    {
-        path: "/election",
-        component: CreateElection,
-    },
-    {
-        path: "/ws",
-        component: WS,
-    },
-    {
         path: "/edit",
         component: EditElection,
+        needsAuth: true,
+        forAdmin: true,
     },
     {
         path: "/view",
         component: ViewElection,
-    },
-    {
-        path: "/results",
-        component: AdminResults,
+        needsAuth: true,
     },
     {
         path: "/result",
         component: Results,
+        needsAuth: true,
     },
     {
         path: "/candidate",
         component: EnrollCandidate,
-    },
-    {
-        path: "/student",
-        component: Student,
+        needsAuth: true,
+        forStudent: true,
     },
     {
         path: "/enroll",
         component: EnrollUpload,
+        needsAuth: true,
+        forStudent: true,
     },
     {
         path: "/preview",
         component: VotingPreview,
+        needsAuth: true,
+        forStudent: true,
     },
     {
         path: "/vote",
-        component: Voting
-    }
+        component: Voting,
+        needsAuth: true,
+        forStudent: true,
+    },
+    {
+        path: "/admin",
+        component: Admin,
+        needsAuth: true,
+        forAdmin: true,
+    },
+    {
+        path: "/student",
+        component: Student,
+        needsAuth: true,
+        forStudent: true,
+    },
+    {
+        path: "/otp",
+        component: OTP,
+        isOTP: true,
+    },
+    {
+        path: "/resetpassword/:token",
+        component: ResetPassword,
+    },
+    {
+        path: "/verify/:token",
+        component: SetPassword,
+    },
+    {
+        path: "/",
+        component: Login,
+        isLogin: true,
+    },
 ]
 
 export default routes

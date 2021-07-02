@@ -103,8 +103,10 @@ const OTP = () => {
                 setSubmitError(false)
                 if(res.data.role === "0"){
                     history.push("/student")
-                } else {
+                } else if(res.data.role === "1") {
                     history.push("/admin")
+                } else if(res.data.role === "2") {
+                    history.push("/superadmin")
                 }
             }
             else if(res.status === 400 || res.status === 401) {

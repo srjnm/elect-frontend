@@ -1,4 +1,4 @@
-import { Paper, Typography, Radio, RadioGroup, FormControl, FormControlLabel, Button, makeStyles, Grid } from "@material-ui/core"
+import { Paper, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, LinearProgress, Typography, Radio, RadioGroup, FormControl, FormControlLabel, Button, makeStyles, Grid } from "@material-ui/core"
 import { Form, Formik } from "formik";
 import * as Yup from 'yup';
 import Header from "./Components/Header"
@@ -41,6 +41,10 @@ const Voting = (props) => {
     const history = useHistory()
     // eslint-disable-next-line
     const {user, dispatch } = useContext(AuthContext)
+    const [responseDialog, setResponseDialog] = useState(false)
+    const [responseTitle, setResponseTitle] = useState('')
+    const [response, setResponse] = useState('')
+    const [responseIsLoading, setResponseIsLoading] = useState(false)
 
     useEffect(() => {
         if(typeof(props.location.state) === "undefined") {
@@ -105,7 +109,49 @@ const Voting = (props) => {
     })
 
     const handleProceed = (values) => {
-        console.log(values)
+        setResponseIsLoading(true)
+        axios.post("https://e1ect.herokuapp.com/api/vote",
+            {
+                election_id: props.location.state.election_id,
+                candidate_id: values.candidate,
+            },
+            {
+                withCredentials: true,
+            }
+        ).then((res) => {
+            if(res.status === 200) {
+                setResponseTitle("Cast Vote")
+                setResponse("Voting complete!")
+                props.setDialog(false)
+                setResponseIsLoading(false)
+                setResponseDialog(true)
+            } else {
+                setResponseTitle("Cast Vote")
+                setResponse("Voting complete!")
+                props.setDialog(false)
+                setResponseIsLoading(false)
+                setResponseDialog(true)
+            }
+        })
+        .catch((err) => {
+            if(typeof err !== "undefined") {
+                if(err.response) {
+                    console.log(err.response)
+                    if(err.response.status === 400) {
+                        setResponseTitle("Cast Vote")
+                        setResponse("Failed to cast the vote!")
+                        props.setDialog(false)
+                        setResponseIsLoading(false)
+                        setResponseDialog(true)
+                    }
+                }
+            }
+        })
+    }
+
+    const handleResponseDialogClose = () => {
+        setResponseDialog(false)
+        history.push("/student")
     }
 
     return (
@@ -181,7 +227,12 @@ const Voting = (props) => {
                                         </RadioGroup>
                                     </FormControl>
                                     <Grid item xs="12" align="center">
-                                        <Button type="submit" className={classes.proceed}><span style={{fontSize: 16, marginLeft: "0.4rem", marginRight: "0.8rem", marginTop: "2px"}}>PROCEED</span><Send style={{fontSize: 18}} color="white" /></Button>
+                                        {
+                                            (responseIsLoading)?
+                                            <LinearProgress color="primary" style={{marginTop: "3rem", marginBottom: "1.2rem", width: "4rem", paddingRight: "2rem", paddingLeft: "2.3rem", marginRight: "0.5rem", paddingTop: "0.1rem", paddingBottom: "0.1rem"}} />
+                                            :
+                                            <Button type="submit" className={classes.proceed}><span style={{fontSize: 16, marginLeft: "0.4rem", marginRight: "0.8rem", marginTop: "2px"}}>PROCEED</span><Send style={{fontSize: 18}} color="white" /></Button>
+                                        }
                                     </Grid>
                                 </Form>
                             )}
@@ -189,6 +240,22 @@ const Voting = (props) => {
                     </Grid>
                 </Grid>
             </Paper>
+            <Dialog
+                open={responseDialog}
+                onClose={handleResponseDialogClose}
+            >
+                <DialogTitle style={{minWidth: "15rem"}}>{responseTitle}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        {response}
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleResponseDialogClose} color="primary">
+                        Okay
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
     );
 }

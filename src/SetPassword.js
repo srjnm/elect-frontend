@@ -163,7 +163,7 @@ const SetPassword = () => {
                     <Grid container direction="column" className={classes.root}>
                         <Grid item xs="12" container>
                             <Grid item xs="12" md="8" className={classes.cover} justify="center" alignItems="center" container>
-                                <img src="https://electuploadstorage.blob.core.windows.net/assets/LandingPageArt.png" className={classes.image} alt="Login" />
+                                <img src="https://electstore.blob.core.windows.net/assets/LandingPageArt.png" className={classes.image} alt="Login" />
                             </Grid>
                             <Grid item xs="12" md="4" justify="center" container className={classes.form}>
                                 <form noValidate autoComplete="off" onSubmit={ handleSubmit }>
