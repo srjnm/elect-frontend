@@ -6,6 +6,7 @@ import isAdmin from "./Utils/isAdmin.js"
 import isStudent from "./Utils/isStudent.js"
 import isAuthenticated from "./Utils/isAuthenticated.js"
 import isSuperAdmin from "./Utils/isSuperAdmin.js"
+import PageNotFound from "./PageNotFound.js"
 
 const theme = createMuiTheme({
     palette: {
@@ -83,6 +84,7 @@ const App = () => {
                         {routes.map((route) => (
                             <RenderRoute {...route} />
                         ))}
+                        <Route component={PageNotFound} />
                     </Switch>
                 </Router>
             </AuthContextProvider>

@@ -217,7 +217,7 @@ const StudentElections = (props) => {
                                     </TableRow>
                                 ) : (
                                     <TableRow>
-                                        <TableCell align="center" colSpan="5" >No elections created.</TableCell>
+                                        <TableCell align="center" colSpan="5" >No elections found.</TableCell>
                                     </TableRow>
                                 )
                             }

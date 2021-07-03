@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Header from './Components/Header';
-import ViewCandidates from './Components/ViewCandidatesForStudents'
+import ViewCandidatesForStudents from './Components/ViewCandidatesForStudents'
 import { AuthContext } from './Context/AuthContext'
 import { useState, useContext, useEffect } from "react"
 import { useHistory } from "react-router"
@@ -51,6 +51,8 @@ export default function EnrollCandidate(props) {
     const classes = useStyles();
 
     const history = useHistory()
+    
+    const currentDate = new Date()
 
     // eslint-disable-next-line
     const {user, dispatch } = useContext(AuthContext)
@@ -140,6 +142,12 @@ export default function EnrollCandidate(props) {
         }
 
         getElection()
+
+        if(election) {
+            if(moment(election.locking_at, "YYYY-MM-DD HH:mm:ss ZZ z").toDate() < currentDate) {
+                history.push("/")
+            }
+        }
     // eslint-disable-next-line
     }, [update])
 
@@ -189,9 +197,14 @@ export default function EnrollCandidate(props) {
                                 { moment(election.locking_at, "YYYY-MM-DD HH:mm:ss ZZ z").format("ddd Do MMM, YYYY h:mm a").toString() }
                             </Typography>
                             <h3 className={classes.headings}  >Candidates</h3>
-                            <ViewCandidates candidates={election.candidates} />
+                            <ViewCandidatesForStudents candidates={election.candidates} />
                             <br/>
                             {
+                                (typeof(election.blacklisted) !== "undefined")?
+                                <Button variant="contained" className={classes.btn} color="secondary" disabled disableElevation>
+                                YOU ARE NOT ELIGIBLE TO BE A CANDIDATE
+                                </Button>
+                                :
                                 (election.candidate.candidate_id !== "")?
                                 <YourCandidateEntry candidate={election.candidate} />
                                 :

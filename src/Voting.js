@@ -7,6 +7,7 @@ import { useHistory } from "react-router"
 import { AuthContext } from './Context/AuthContext'
 import axios from 'axios'
 import { Send } from "@material-ui/icons"
+import moment from "moment"
 
 const styles = makeStyles((theme) => ({
     paper: {
@@ -40,7 +41,8 @@ const Voting = (props) => {
 
     const history = useHistory()
     // eslint-disable-next-line
-    const {user, dispatch } = useContext(AuthContext)
+    const currentDate = new Date()
+    const { dispatch } = useContext(AuthContext)
     const [responseDialog, setResponseDialog] = useState(false)
     const [responseTitle, setResponseTitle] = useState('')
     const [response, setResponse] = useState('')
@@ -48,6 +50,10 @@ const Voting = (props) => {
 
     useEffect(() => {
         if(typeof(props.location.state) === "undefined") {
+            history.push("/")
+        }
+
+        if(moment(props.location.state.ending_at, "YYYY-MM-DD HH:mm:ss ZZ z").toDate() < currentDate) {
             history.push("/")
         }
     // eslint-disable-next-line

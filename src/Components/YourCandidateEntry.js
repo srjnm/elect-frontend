@@ -102,7 +102,7 @@ const YourCandidateEntry = (props) => {
             >
                 <DialogTitle style={{minWidth: "15rem"}}>{dialogTitle}</DialogTitle>
                 <DialogContent>
-                    <img src={imgUrl} style={{width: "100%"}} alt={dialogTitle} />
+                    <img src={imgUrl} style={{width: "100%", maxHeight: "70vh"}} alt={dialogTitle} />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleImageDialogClose} color="action">

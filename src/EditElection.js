@@ -51,6 +51,8 @@ const EditElection = (props) => {
     const history = useHistory()
     const { dispatch } = useContext(AuthContext)
 
+    const currentDate = new Date()
+
     const [responseDialog, setResponseDialog] = useState(false)
     const [responseTitle, setResponseTitle] = useState('')
     const [response, setResponse] = useState('')
@@ -137,11 +139,12 @@ const EditElection = (props) => {
 
     // eslint-disable-next-line
     useEffect(async () => {
-        if(props.location.state === "") {
-            history.push("/")
-        }
-
         await getElection()
+        if(election) {
+            if(moment(election.locking_at, "YYYY-MM-DD HH:mm:ss ZZ z").toDate() < currentDate) {
+                history.push("/")
+            }
+        }
     // eslint-disable-next-line
     }, [])
 
@@ -209,6 +212,16 @@ const EditElection = (props) => {
             setResponseTitle("Add Participants")
             setResponse("Empty file!")
             setParticipantsRespLoading(false)
+            setResponseDialog(true)
+            return
+        }
+
+        if(file.type !== "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
+            setResponseTitle("Register Students")
+            setResponse("Invalid file type!")
+            setParticipantsRespLoading(false)
+            setUploadComplete(false)
+            setFile(null)
             setResponseDialog(true)
             return
         }

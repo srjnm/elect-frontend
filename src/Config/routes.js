@@ -95,7 +95,7 @@ const routes = [
         component: Login,
         isLogin: true,
         title: "ELECT | Login",
-    },
+    }
 ]
 
 export default routes

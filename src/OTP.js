@@ -2,7 +2,7 @@ import { useState, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 // eslint-disable-next-line
-import { TextField, Container, makeStyles, Button, LinearProgress, Grid, Typography, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions} from '@material-ui/core'
+import { TextField, makeStyles, Button, LinearProgress, Grid, Typography, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions} from '@material-ui/core'
 import { AuthContext } from './Context/AuthContext'
 
 const styles = makeStyles((theme) => ({
@@ -106,7 +106,7 @@ const OTP = () => {
                 } else if(res.data.role === "1") {
                     history.push("/admin")
                 } else if(res.data.role === "2") {
-                    window.location.assign("/admin/")
+                    window.location.assign("http://localhost:8080/superadmin/")
                 }
             }
             else if(res.status === 400 || res.status === 401) {
@@ -124,7 +124,7 @@ const OTP = () => {
                 }
             }
             if(typeof err.response !== 'undefined') {
-                if(er.response.status === 511) {
+                if(err.response.status === 511) {
                     dispatch({
                         type: "LOGOUT_SUCCESS",
                     })

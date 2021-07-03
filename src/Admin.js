@@ -135,6 +135,16 @@ const Admin = () => {
             return
         }
 
+        if(file.type !== "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
+            setResponseTitle("Register Students")
+            setResponse("Invalid file type!")
+            setRegisterRespLoading(false)
+            setUploadComplete(false)
+            setFile(null)
+            setResponseDialog(true)
+            return
+        }
+
         const formData = new FormData()
         formData.append('register', file)
 
@@ -162,7 +172,7 @@ const Admin = () => {
             if(typeof error !== 'undefined') {
                 if(error.status === 400){
                     if(error.data.message){
-                        setResponseTitle("Resgister Students")
+                        setResponseTitle("Register Students")
                         setResponse(error.data.message)
                         setRegisterRespLoading(false)
                         setUploadComplete(false)

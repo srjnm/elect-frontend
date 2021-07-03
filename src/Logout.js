@@ -24,6 +24,10 @@ const Logout = () => {
         })
         .catch((err) => {
             console.log(err)
+            dispatch({
+                type: "LOGOUT_SUCCESS",
+            })
+            history.push("/")
         })
     // eslint-disable-next-line
     }, [])

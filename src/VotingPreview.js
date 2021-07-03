@@ -58,6 +58,7 @@ const VotingPreview = (props) => {
     const history = useHistory()
     // eslint-disable-next-line
     const {user, dispatch } = useContext(AuthContext)
+    const currentDate = new Date()
 
     const [election, setElection] = useState(null)
     const [loading, setLoading] = useState(true)
@@ -125,10 +126,6 @@ const VotingPreview = (props) => {
     )
 
     useEffect(() => {
-        if(props.location.state === "") {
-            history.push("/")
-        }
-
         const getElection = async () => {
             axios.get(
                 "/api/election/"+props.location.state,
@@ -154,6 +151,12 @@ const VotingPreview = (props) => {
             })
         }
         getElection()
+
+        if(election) {
+            if(moment(election.ending_at, "YYYY-MM-DD HH:mm:ss ZZ z").toDate() < currentDate) {
+                history.push("/")
+            }
+        }
     // eslint-disable-next-line
     }, [])
 
@@ -232,7 +235,8 @@ const VotingPreview = (props) => {
                                                                 <Card style={{height: "18rem", width: "11rem"}}>
                                                                     <CardActionArea>
                                                                         <CardMedia
-                                                                            style={{paddingTop: "100%"}}
+                                                                            component="img"
+                                                                            style={{height: "170px", objectFit:"scale-down"}}
                                                                             title={candidate.first_name}
                                                                             image={candidate.display_picture}
                                                                         />
@@ -269,7 +273,7 @@ const VotingPreview = (props) => {
             >
                 <DialogTitle style={{minWidth: "15rem"}}>{dialogTitle}</DialogTitle>
                 <DialogContent>
-                    <img src={imgUrl} style={{width: "100%"}} alt={dialogTitle} />
+                    <img src={imgUrl} style={{width: "100%", maxHeight: "70vh"}} alt={dialogTitle} />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleImageDialogClose} color="action">
