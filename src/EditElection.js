@@ -61,9 +61,58 @@ const EditElection = (props) => {
     const [uploadComplete, setUploadComplete] = useState(false)
     const [addedParticipant, setAddedParticipant] = useState(false)
 
+    const customAxios = axios.create({
+        withCredentials: true,
+    })
+
+    const refresh = async () => {
+        await customAxios.post(
+            "/refresh",
+        ).then((resp) => {
+            if(resp.status === 200){
+                return true
+            }
+        }).then((updt) => {
+            // console.log(update)
+            // setUpdate(!update)
+            // console.log(update)
+        }).catch((er) => {
+            console.log(er)
+            if(typeof er.response !== 'undefined') {
+                if(er.response.status === 511) {
+                    dispatch({
+                        type: "LOGOUT_SUCCESS",
+                    })
+                    history.push("/")
+                }
+            }
+        })
+    }
+
+    axios.interceptors.response.use(
+        null,
+        async (error) => {
+            if(error.response) {
+                if(error.response.status === 406) {
+                    await refresh()
+                    console.log(error.config)
+                    return axios.request(error.config)
+                }
+                else if(error.response.status === 511) {
+                    dispatch({
+                        type: "LOGOUT_SUCCESS",
+                    })
+                    history.push("/")
+                }
+            }
+            
+            return Promise.reject(error.config)
+        }
+    )
+
     const getElection = async () => {
         axios.get(
-            "https://e1ect.herokuapp.com/api/election/"+props.location.state,
+            "/api/election/"+props.location.state,
             {
                 withCredentials: true,
             }
@@ -115,7 +164,7 @@ const EditElection = (props) => {
 
     const handleEditElection = (values) => {
         setLoading(true)
-        axios.put("https://e1ect.herokuapp.com/api/election",
+        axios.put("/api/election",
             {
                 election_id: props.location.state,
                 title: values.title,
@@ -169,7 +218,7 @@ const EditElection = (props) => {
 
         setParticipantsRespLoading(true)
 
-        axios.post("https://e1ect.herokuapp.com/api/participants/"+props.location.state,
+        axios.post("/api/participants/"+props.location.state,
             formData,
             {
                 withCredentials: true,

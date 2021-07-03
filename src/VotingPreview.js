@@ -81,7 +81,7 @@ const VotingPreview = (props) => {
 
     const refresh = async () => {
         await customAxios.post(
-            "https://e1ect.herokuapp.com/refresh",
+            "/refresh",
         ).then((resp) => {
             if(resp.status === 200){
                 return true
@@ -131,7 +131,7 @@ const VotingPreview = (props) => {
 
         const getElection = async () => {
             axios.get(
-                "https://e1ect.herokuapp.com/api/election/"+props.location.state,
+                "/api/election/"+props.location.state,
                 {
                     withCredentials: true,
                 }

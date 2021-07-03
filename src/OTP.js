@@ -84,7 +84,7 @@ const OTP = () => {
 
         setSubmitIsLoading(true)
 
-        axios.post("https://e1ect.herokuapp.com/otp",
+        axios.post("/otp",
             {
                 email: user.email,
                 otp: otp,
@@ -106,7 +106,7 @@ const OTP = () => {
                 } else if(res.data.role === "1") {
                     history.push("/admin")
                 } else if(res.data.role === "2") {
-                    history.push("/superadmin")
+                    window.location.assign("/admin/")
                 }
             }
             else if(res.status === 400 || res.status === 401) {

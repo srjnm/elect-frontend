@@ -71,7 +71,7 @@ const StudentElections = (props) => {
     useEffect(() => {
         const getElections = async () => {
             axios.get(
-                "https://e1ect.herokuapp.com/api/elections",
+                "/api/elections",
                 {
                     withCredentials: true,
                 }

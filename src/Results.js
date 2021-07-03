@@ -41,7 +41,7 @@ const Results = (props) => {
 
     const refresh = async () => {
         await customAxios.post(
-            "https://e1ect.herokuapp.com/refresh",
+            "/refresh",
         ).then((resp) => {
             if(resp.status === 200){
                 return true
@@ -86,7 +86,7 @@ const Results = (props) => {
 
     const getElectionResults = async () => {
         axios.get(
-            "https://e1ect.herokuapp.com/api/results/"+props.location.state,
+            "/api/results/"+props.location.state,
             {
                 withCredentials: true,
             }

@@ -5,6 +5,7 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core"
 import isAdmin from "./Utils/isAdmin.js"
 import isStudent from "./Utils/isStudent.js"
 import isAuthenticated from "./Utils/isAuthenticated.js"
+import isSuperAdmin from "./Utils/isSuperAdmin.js"
 
 const theme = createMuiTheme({
     palette: {
@@ -32,12 +33,21 @@ const App = () => {
             history.push("/student")
         }
 
+        if(route.isLogin && isSuperAdmin()) {
+            //history.push("/admin")
+            window.location.assign("http://localhost:8080/superadmin/")
+        }
+
         if(route.isOTP && isAdmin()) {
             history.push("/admin")
         }
 
         if(route.isOTP && isStudent()) {
             history.push("/student")
+        }
+
+        if(route.isOTP && isSuperAdmin()) {
+            window.location.assign("/admin/")
         }
 
         if(route.needsAuth && !isAuthenticated()) {
@@ -49,6 +59,10 @@ const App = () => {
         }
 
         if(route.forStudent && !isStudent()) {
+            history.push("/")
+        }
+
+        if(route.forSuperAdmin && !isSuperAdmin()) {
             history.push("/")
         }
 

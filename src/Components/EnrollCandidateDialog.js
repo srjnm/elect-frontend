@@ -96,7 +96,7 @@ const EnrollCandidateDialog = (props) => {
         formData.append("poster", values.poster)
         formData.append("id_proof", values.id_proof)
 
-        axios.post("https://e1ect.herokuapp.com/api/candidate",
+        axios.post("/api/candidate",
             formData,
             {
                 withCredentials: true,

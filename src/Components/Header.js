@@ -1,4 +1,4 @@
-import { Grid, makeStyles, Typography, Menu, MenuItem, Button } from '@material-ui/core'
+import { Grid, makeStyles, Typography, Menu, MenuItem, Button, Link } from '@material-ui/core'
 import axios from 'axios'
 import IconButton from '@material-ui/core/IconButton'
 import AccountCircle from "@material-ui/icons/AccountCircle"
@@ -65,12 +65,7 @@ const Header = (props) => {
     const handleLogout = (e) => {
         e.preventDefault()
 
-        if(user.role === '') {
-            history.push("/")
-            return
-        }
-
-        axios.post("https://e1ect.herokuapp.com/logout",
+        axios.post("/logout",
             {},
             {
                 withCredentials: true,
@@ -92,9 +87,11 @@ const Header = (props) => {
         <div>
             <Grid container alignItems="center" justify="center" className={classes.root}>
                 <Grid item xs="2" align="center">
-                    <Typography color="primary" display="initial" style={{fontSize: "3.5rem", fontFamily: "Teko", letterSpacing: 0.6, textShadow: "0px 0px 4px rgba(96,183,233,0.3)"}}>
-                        ELECT
-                    </Typography>
+                    <Link href="/" underline="none">
+                        <Typography color="primary" display="initial" style={{fontSize: "3.5rem", fontFamily: "Teko", letterSpacing: 0.6, textShadow: "0px 0px 4px rgba(96,183,233,0.3)"}}>
+                            ELECT
+                        </Typography>
+                    </Link>
                 </Grid>
                 <Grid item xs="4" className={classes.pages}>
                     {

@@ -78,7 +78,7 @@ function AdminRegister() {
               if(error.response) {
                   if(error.response.status === 406) {
                       customAxios.post(
-                          "https://e1ect.herokuapp.com/refresh",
+                          "/refresh",
                       ).then((resp) => {
                           if(resp.status === 200){
                               return !update 
@@ -102,7 +102,7 @@ function AdminRegister() {
       )
 
       axios.get(
-          "https://e1ect.herokuapp.com/api/registeredstudents",
+          "/api/registeredstudents",
           {
               withCredentials: true,
           }
@@ -134,7 +134,7 @@ function AdminRegister() {
 
     function handleDelete(id) {
       axios.delete(
-          "https://e1ect.herokuapp.com/api/registeredstudent/"+id,
+          "/api/registeredstudent/"+id,
           {
               withCredentials: true,
           }

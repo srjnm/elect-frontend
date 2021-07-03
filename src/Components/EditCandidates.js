@@ -62,7 +62,7 @@ const EditCandidates = (props) => {
 
     const refresh = async () => {
         await customAxios.post(
-            "https://e1ect.herokuapp.com/refresh",
+            "/refresh",
         ).then((resp) => {
             if(resp.status === 200){
                 return true
@@ -107,7 +107,7 @@ const EditCandidates = (props) => {
 
     const getElection = async () => {
         axios.get(
-            "https://e1ect.herokuapp.com/api/election/"+props.electionId,
+            "/api/election/"+props.electionId,
             {
                 withCredentials: true,
             }
@@ -136,7 +136,7 @@ const EditCandidates = (props) => {
     async function approveCandidate(id) {
         setApprovalIsLoading(true)
         await axios.post(
-            "https://e1ect.herokuapp.com/api/candidate/approve/"+id,
+            "/api/candidate/approve/"+id,
             {},
             {
                 withCredentials: true,
@@ -169,7 +169,7 @@ const EditCandidates = (props) => {
     async function unapproveCandidate(id) {
         setApprovalIsLoading(true)
         await axios.post(
-            "https://e1ect.herokuapp.com/api/candidate/unapprove/"+id,
+            "/api/candidate/unapprove/"+id,
             {},
             {
                 withCredentials: true,

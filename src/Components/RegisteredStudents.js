@@ -69,7 +69,7 @@ const RegisteredStudents = (props) => {
 
     // const refresh = async () => {
     //     await customAxios.post(
-    //         "https://e1ect.herokuapp.com/refresh",
+    //         "/refresh",
     //     ).then((resp) => {
     //         if(resp.status === 200){
     //             return !update 
@@ -118,7 +118,7 @@ const RegisteredStudents = (props) => {
         const getStudents = async () => {
             if(mounted) {
                 axios.get(
-                    "https://e1ect.herokuapp.com/api/registeredstudents",
+                    "/api/registeredstudents",
                     {
                         withCredentials: true,
                     }
@@ -165,7 +165,7 @@ const RegisteredStudents = (props) => {
 
     function handleDelete(id) {
         axios.delete(
-            "https://e1ect.herokuapp.com/api/registeredstudent/"+id,
+            "/api/registeredstudent/"+id,
             {
                 withCredentials: true,
             }

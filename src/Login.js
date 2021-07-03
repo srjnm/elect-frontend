@@ -102,7 +102,7 @@ const Login = (props) => {
 
         setLoginIsLoading(true)
 
-        axios.post("https://e1ect.herokuapp.com/login",
+        axios.post("/login",
             {
                 email: email,
                 password: password,
@@ -153,7 +153,7 @@ const Login = (props) => {
 
         setfPasswordResponseIsLoading(true)
 
-        axios.post("https://e1ect.herokuapp.com/createresettoken",
+        axios.post("/createresettoken",
             {
                 email: fEmail,
             },

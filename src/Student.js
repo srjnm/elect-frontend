@@ -63,7 +63,7 @@ const Student = () => {
 
     const refresh = async () => {
         await customAxios.post(
-            "https://e1ect.herokuapp.com/refresh",
+            "/refresh",
         ).then((resp) => {
             if(resp.status === 200){
                 return !update 

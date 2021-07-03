@@ -59,7 +59,7 @@ const Voting = (props) => {
 
     const refresh = async () => {
         await customAxios.post(
-            "https://e1ect.herokuapp.com/refresh",
+            "/refresh",
         ).then((resp) => {
             if(resp.status === 200){
                 return true
@@ -110,7 +110,7 @@ const Voting = (props) => {
 
     const handleProceed = (values) => {
         setResponseIsLoading(true)
-        axios.post("https://e1ect.herokuapp.com/api/vote",
+        axios.post("/api/vote",
             {
                 election_id: props.location.state.election_id,
                 candidate_id: values.candidate,
@@ -122,13 +122,6 @@ const Voting = (props) => {
             if(res.status === 200) {
                 setResponseTitle("Cast Vote")
                 setResponse("Voting complete!")
-                props.setDialog(false)
-                setResponseIsLoading(false)
-                setResponseDialog(true)
-            } else {
-                setResponseTitle("Cast Vote")
-                setResponse("Voting complete!")
-                props.setDialog(false)
                 setResponseIsLoading(false)
                 setResponseDialog(true)
             }
@@ -140,7 +133,6 @@ const Voting = (props) => {
                     if(err.response.status === 400) {
                         setResponseTitle("Cast Vote")
                         setResponse("Failed to cast the vote!")
-                        props.setDialog(false)
                         setResponseIsLoading(false)
                         setResponseDialog(true)
                     }

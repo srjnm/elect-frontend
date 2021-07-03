@@ -38,7 +38,7 @@ const CreateElectionDialog = (props) => {
 
     const handleCreateElection = (values) => {
         setResponseIsLoading(true)
-        axios.post("https://e1ect.herokuapp.com/api/election",
+        axios.post("/api/election",
             {
                 title: values.title,
                 starting_at: values.starting_at.toString(),

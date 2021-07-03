@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import axios from 'axios'
 // eslint-disable-next-line
-import { TextField, Container, makeStyles, Button, LinearProgress, Grid, Typography, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions} from '@material-ui/core'
+import { TextField, CircularProgress, makeStyles, Button, LinearProgress, Grid, Typography, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions} from '@material-ui/core'
 
 const styles = makeStyles((theme) => ({
     root: {
@@ -85,7 +85,7 @@ const ResetPassword = () => {
 
         setSubmitIsLoading(true)
 
-        axios.post("https://e1ect.herokuapp.com/resetpassword",
+        axios.post("/resetpassword",
             {
                 new_password: newPassword,
                 token: token,
@@ -118,7 +118,7 @@ const ResetPassword = () => {
             return
         }
 
-        axios.post("https://e1ect.herokuapp.com/resettoken/"+token,
+        axios.post("/resettoken/"+token,
             {},
             {
                 withCredentials: true,
@@ -153,6 +153,12 @@ const ResetPassword = () => {
 
     return (
         <div>
+            {
+                !loaded &&
+                <div style={{height: "100%", padding: "48vh", paddingLeft: "46%"}}>
+                    <CircularProgress variant="indeterminate" />
+                </div>
+            }
             {
                 loaded &&
                 <div>

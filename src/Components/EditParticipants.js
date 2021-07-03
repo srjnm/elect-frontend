@@ -41,7 +41,7 @@ const EditParticipants = (props) => {
 
     const refresh = async () => {
         await customAxios.post(
-            "https://e1ect.herokuapp.com/refresh",
+            "/refresh",
         ).then((resp) => {
             if(resp.status === 200){
                 return true
@@ -86,7 +86,7 @@ const EditParticipants = (props) => {
 
     const getElection = async () => {
         axios.get(
-            "https://e1ect.herokuapp.com/api/election/"+props.electionId,
+            "/api/election/"+props.electionId,
             {
                 withCredentials: true,
             }
@@ -124,7 +124,7 @@ const EditParticipants = (props) => {
     }, [props.addedParticipant])
 
     async function handleDelete(id) {
-        await axios.delete("https://e1ect.herokuapp.com/api/participant",{
+        await axios.delete("/api/participant",{
             withCredentials: true,
             data: {
                 election_id: props.electionId,

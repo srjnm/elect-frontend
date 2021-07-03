@@ -44,6 +44,16 @@ const styles = makeStyles((theme) => ({
             marginLeft: "2.0rem"
         },
     },
+    side: {
+        [theme.breakpoints.down('md')]: {
+            marginLeft: "1rem",
+            marginRight: "1rem"
+        },
+        [theme.breakpoints.up('md')]: {
+            marginLeft: "3rem",
+            marginRight: "3rem"
+        },
+    }
 }))
 
 const Admin = () => {
@@ -70,7 +80,7 @@ const Admin = () => {
 
     const refresh = async () => {
         await customAxios.post(
-            "https://e1ect.herokuapp.com/refresh",
+            "/refresh",
         ).then((resp) => {
             if(resp.status === 200){
                 return !update 
@@ -130,7 +140,7 @@ const Admin = () => {
 
         setRegisterRespLoading(true)
 
-        axios.post("https://e1ect.herokuapp.com/api/registerstudents",
+        axios.post("/api/registerstudents",
             formData,
             {
                 withCredentials: true,
@@ -186,7 +196,7 @@ const Admin = () => {
             { (register)?
                 <div style={{marginRight: "50px"}}>
                     <Grid container direction="column" alignItems="flex-start" className={classes.root}>
-                        <Grid item xs="12">
+                        <Grid item xs="12" className={classes.side}>
                             <div style={{paddingLeft: 25, marginRight: -25, paddingTop: 25}}>
                                 <Paper style={{paddingBottom: "1.2rem", paddingTop: "1.2rem"}}>
                                     <form noValidate onSubmit={handleRegisterSubmit}>
@@ -232,7 +242,7 @@ const Admin = () => {
                                 </Paper>
                             </div>
                         </Grid>
-                        <Grid item xs="12">
+                        <Grid item xs="12" className={classes.side}>
                             <div style={{paddingLeft: 25, paddingRight: 25, paddingTop: 10, paddingBottom: 25}}>
                                 <Paper>
                                     <Typography style={{padding: "1rem", display: "inline"}}>Download Template</Typography>
@@ -250,7 +260,7 @@ const Admin = () => {
                             </div>
                         </Grid>
                         <Grid item xs="12" alignItems="center">
-                            <div style={{margin: "3rem"}}>
+                            <div className={classes.side}>
                                 <RegisteredStudents render={update} />
                             </div>
                         </Grid>

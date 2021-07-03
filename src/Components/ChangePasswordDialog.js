@@ -32,7 +32,7 @@ const ChangePasswordDialog = (props) => {
 
     const refresh = async () => {
         await customAxios.post(
-            "https://e1ect.herokuapp.com/refresh",
+            "/refresh",
         ).then((resp) => {
             if(resp.status === 200){
                 return !update 
@@ -78,7 +78,7 @@ const ChangePasswordDialog = (props) => {
 
     const handleChangePassword = (values) => {
         setResponseIsLoading(true)
-        axios.post("https://e1ect.herokuapp.com/changepassword",
+        axios.post("/changepassword",
             {
                 current_password: values.current_password,
                 new_password: values.new_password,
