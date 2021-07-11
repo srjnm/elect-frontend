@@ -168,11 +168,11 @@ const AdminElections = (props) => {
                                         <TableCell align="center">{ moment(election.ending_at, "YYYY-MM-DD HH:mm:ss ZZ z").format("ddd Do MMM, YYYY h:mm a").toString() }</TableCell>
                                         <TableCell align="center">
                                             {
-                                                (moment(election.locking_at, "YYYY-MM-DD HH:mm:ss ZZ z").toDate() > currentDate)?
+                                                (moment(election.locking_at, "YYYY-MM-DD HH:mm:ss ZZ z").toDate() >= currentDate)?
                                                     <Button className={[classes.electionButton, classes.befLockEButton]} color="action" style={{backgroundColor: "#ededed"}} onClick={() => handleEditElection(election.election_id)} variant="outlined">View/Edit Election</Button>
-                                                    :(moment(election.starting_at, "YYYY-MM-DD HH:mm:ss ZZ z").toDate() > currentDate)?
+                                                    :(moment(election.starting_at, "YYYY-MM-DD HH:mm:ss ZZ z").toDate() >= currentDate)?
                                                         <Button className={[classes.electionButton, classes.lockedButton]} color="success" style={{backgroundColor: "#e0ffe2", color: "#2e8f32"}} onClick={() => handleViewElection(election.election_id)} variant="outlined">View Election</Button>
-                                                        :(moment(election.ending_at, "YYYY-MM-DD HH:mm:ss ZZ z").toDate() > currentDate)?
+                                                        :(moment(election.ending_at, "YYYY-MM-DD HH:mm:ss ZZ z").toDate() >= currentDate)?
                                                             <Button className={[classes.electionButton, classes.inProgressButton]} color="secondary" style={{backgroundColor: "#ffe6e6"}} onClick={() => handleViewElection(election.election_id)} variant="outlined">In Progress</Button>
                                                             :<Button className={[classes.electionButton, classes.resultsButton]} color="primary" style={{backgroundColor: "#f0faff"}} onClick={() => handleViewResults(election.election_id)} variant="outlined">View Results</Button>
 

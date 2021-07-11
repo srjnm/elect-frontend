@@ -143,7 +143,7 @@ const EditElection = (props) => {
     useEffect(async () => {
         await getElection()
         if(election) {
-            if(moment(election.locking_at, "YYYY-MM-DD HH:mm:ss ZZ z").toDate() < currentDate) {
+            if(moment(election.locking_at, "YYYY-MM-DD HH:mm:ss ZZ z").toDate() <= currentDate) {
                 history.push("/")
             }
         }

@@ -33,6 +33,18 @@ const styles = makeStyles((theme) => ({
         },
         fontWeight: 900,
         marginTop: "2rem"
+    },
+    vote: {
+        [theme.breakpoints.down('md')]: {
+            marginTop: "0.5rem",
+            marginBottom: "0.5rem",
+            fontSize: 18,
+        },
+        [theme.breakpoints.up('md')]: {
+            marginTop: "1rem",
+            marginBottom: "1rem",
+            fontSize: 22,
+        },
     }
 }))
 
@@ -200,7 +212,7 @@ const Voting = (props) => {
                                                 (props.location.state)?
                                                 props.location.state.candidates.map((candidate) => (
                                                     <Grid item xs="12" align="center">
-                                                        <Button fullWidth variant="outlined" style={{textTransform: "none", width: "60vw", backgroundColor: "#f4f4f4", fontSize: 22, fontWeight: 500}} onClick={()=>{
+                                                        <Button fullWidth variant="outlined" className={classes.vote} style={{textTransform: "none", width: "60vw", backgroundColor: "#f4f4f4", fontWeight: 500}} onClick={()=>{
                                                             if(values.candidate === candidate.candidate_id) {
                                                                 setFieldValue("candidate", "")
                                                             } else {
