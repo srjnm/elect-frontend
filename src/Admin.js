@@ -13,6 +13,22 @@ const styles = makeStyles((theme) => ({
     root: {
 
     },
+    table: {
+        [theme.breakpoints.down('md')]: {
+            margin: "1rem"
+        },
+        [theme.breakpoints.up('md')]: {
+            margin: "3rem"
+        },
+    },
+    createElection: {
+        [theme.breakpoints.down('md')]: {
+            paddingLeft: "1rem"
+        },
+        [theme.breakpoints.up('md')]: {
+            paddingLeft: "3rem"
+        },
+    },
     upload: {
         letterSpacing: 0.6,
         backgroundColor: "black",
@@ -90,7 +106,7 @@ const Admin = () => {
             // setUpdate(!update)
             // console.log(update)
         }).catch((er) => {
-            console.log(er)
+            //console.log(er)
             if(typeof er.response !== 'undefined') {
                 if(er.response.status === 511) {
                     dispatch({
@@ -108,7 +124,7 @@ const Admin = () => {
             if(error.response) {
                 if(error.response.status === 406) {
                     await refresh()
-                    console.log(error.config)
+                    //console.log(error.config)
                     setUpdate(!update)
                     return axios.request(error.config)
                 }
@@ -280,7 +296,7 @@ const Admin = () => {
                 <div>
                     <Grid container className={classes.root}>
                         <Grid item xs="12">
-                            <div style={{paddingLeft: "3rem"}}>
+                            <div className={classes.createElection}>
                                 <Button
                                     color="primary"
                                     variant="outlined"
@@ -292,7 +308,7 @@ const Admin = () => {
                             </div>
                         </Grid>
                         <Grid item xs="12" align="center">
-                            <div style={{margin: "3rem", marginTop: "1rem"}}>
+                            <div className={classes.table} style={{marginTop: "1rem"}}>
                                 <AdminElections render={update} />
                             </div>
                         </Grid>

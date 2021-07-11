@@ -51,7 +51,7 @@ const EditParticipants = (props) => {
             // setUpdate(!update)
             // console.log(update)
         }).catch((er) => {
-            console.log(er)
+            //console.log(er)
             if(typeof er.response !== 'undefined') {
                 if(er.response.status === 511) {
                     dispatch({
@@ -69,7 +69,7 @@ const EditParticipants = (props) => {
             if(error.response) {
                 if(error.response.status === 406) {
                     await refresh()
-                    console.log(error.config)
+                    //console.log(error.config)
                     return axios.request(error.config)
                 }
                 else if(error.response.status === 511) {
@@ -91,7 +91,7 @@ const EditParticipants = (props) => {
                 withCredentials: true,
             }
         ).then((res) => {
-            console.log(res)
+            //console.log(res)
             if(res.status === 200) {
                 return res.data
             }
@@ -112,6 +112,18 @@ const EditParticipants = (props) => {
             }
         })
     }
+
+    // eslint-disable-next-line
+    useEffect(() => {
+        if(props.electionId === "") {
+            history.push("/")
+        }
+
+        setElection(props.election)
+        setParticipants((typeof props.election.participants === 'undefined')?null:props.election.participants)
+        setLoading(false)
+    // eslint-disable-next-line
+    }, [])
 
     // eslint-disable-next-line
     useEffect(async () => {

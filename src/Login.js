@@ -52,6 +52,7 @@ const styles = makeStyles((theme) => ({
 const Login = (props) => {
     const classes = styles()
 
+    // eslint-disable-next-line
     const { user, dispatch } = useContext(AuthContext)
     const history = useHistory()
 
@@ -76,12 +77,6 @@ const Login = (props) => {
         e.preventDefault()
         setEmailError(false)
         setPasswordError(false)
-
-        if(user.user_id !== '' && user.email !== '' && user.role !== '') {
-            setError("Already Logged in!")
-            setLoginError(true)
-            return
-        }
 
         if(email === '') {
             setEmailError(true)
@@ -171,7 +166,7 @@ const Login = (props) => {
             setfPasswordResponseIsLoading(false)
         })
         .catch((err) => {
-            console.log(err.response)
+            //console.log(err.response)
             if(err.response) {
                 if(err.response.status === 400) {
                     setfPasswordResponse(JSON.stringify(err.response.data.message))

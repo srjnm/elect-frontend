@@ -12,16 +12,23 @@ const styles = makeStyles((theme) => ({
     paper: {
         padding: "3rem",
         [theme.breakpoints.down('md')]: {
-            marginTop: "3rem",
-            marginBottom: "4rem",
-            marginLeft: "2rem",
-            marginRight: "2rem",
+            marginTop: "1.5rem",
+            marginBottom: "2rem",
+            marginLeft: "1rem",
+            marginRight: "1rem",
         },
         [theme.breakpoints.up('md')]: {
             marginTop: "3rem",
             marginBottom: "4rem",
             marginLeft: "5rem",
             marginRight: "5rem",
+        },
+    },
+    cards: {
+        [theme.breakpoints.up('md')]: {
+            padding: "1rem",
+            paddingLeft: "2rem",
+            paddingRight: "2rem",
         },
     },
     proceed: {
@@ -92,7 +99,7 @@ const VotingPreview = (props) => {
             // setUpdate(!update)
             // console.log(update)
         }).catch((er) => {
-            console.log(er)
+            //console.log(er)
             if(typeof er.response !== 'undefined') {
                 if(er.response.status === 511) {
                     dispatch({
@@ -110,7 +117,7 @@ const VotingPreview = (props) => {
             if(error.response) {
                 if(error.response.status === 406) {
                     await refresh()
-                    console.log(error.config)
+                    //console.log(error.config)
                     return axios.request(error.config)
                 }
                 else if(error.response.status === 511) {
@@ -189,7 +196,7 @@ const VotingPreview = (props) => {
                             <Typography style={{fontSize: "18px", fontWeight: 300}}>
                                 ELECTION
                             </Typography>
-                            <Typography variant="h4" style={{fontWeight: "bold"}}>
+                            <Typography variant="h5" style={{fontWeight: "bold"}}>
                                 {election.title}
                             </Typography>
                             <Typography variant="subtitle1">
@@ -226,7 +233,7 @@ const VotingPreview = (props) => {
                                                 CANDIDATES
                                             </Typography>
                                         </Grid>
-                                        <Grid item xs="12" align="center" style={{padding: "1rem", paddingLeft: "2rem", paddingRight: "2rem"}}>
+                                        <Grid item xs="12" align="center" className={classes.cards}>
                                             <MuiThemeProvider theme={theme}>
                                                 <Grid item container spacing="4" justify="center">
                                                     {
@@ -242,7 +249,7 @@ const VotingPreview = (props) => {
                                                                         />
                                                                     </CardActionArea>
                                                                     <CardContent>
-                                                                        <Typography style={{fontSize: 18, fontWeight: 700, marginTop: "-0.7rem"}}>
+                                                                        <Typography style={{fontWeight: 700, marginTop: "-0.7rem", width: "100%"}}>
                                                                             {candidate.first_name.toUpperCase()+" "+candidate.last_name.toUpperCase()}
                                                                         </Typography>
                                                                         <Typography style={{fontSize: 16, fontWeight: 300, marginTop: "-0.4rem", marginBottom: "0.5rem"}}>
@@ -257,7 +264,7 @@ const VotingPreview = (props) => {
                                                 </Grid>
                                             </MuiThemeProvider>
                                         </Grid>
-                                        <Grid item xs="12" align="center">
+                                        <Grid item xs="12" align="center" style={{marginTop: "0.6rem"}}>
                                             <Button onClick={()=>{handleProceed()}} className={classes.proceed}><span style={{fontSize: 17, marginLeft: "0.4rem", marginRight: "0.8rem", marginTop: "2px"}}>PROCEED TO VOTE</span><Send style={{fontSize: 18}} color="white" /></Button>
                                         </Grid>
                                     </Grid>

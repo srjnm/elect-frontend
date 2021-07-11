@@ -1,4 +1,4 @@
-import { CircularProgress, Grid, makeStyles, Paper, Typography } from "@material-ui/core"
+import { Button, CircularProgress, Grid, makeStyles, Paper, Typography, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@material-ui/core"
 import { useState, useContext, useEffect } from "react"
 import { useHistory } from "react-router"
 import { AuthContext } from './Context/AuthContext'
@@ -25,10 +25,10 @@ const styles = makeStyles((theme) => ({
     },
     mainDiv: {
         [theme.breakpoints.down('md')]: {
-            marginTop: "3rem",
-            marginBottom: "4rem",
-            marginLeft: "2rem",
-            marginRight: "2rem",
+            marginTop: "1.5rem",
+            marginBottom: "2rem",
+            marginLeft: "1rem",
+            marginRight: "1rem",
         },
         [theme.breakpoints.up('md')]: {
             marginTop: "3rem",
@@ -51,6 +51,8 @@ const ViewElection = (props) => {
 
     const [election, setElection] = useState(null)
     const [loading, setLoading] = useState(true)
+    const [deleteDialog, setDeleteDialog] = useState(false)
+    const [deleteElectionID, setDeleteElectionID] = useState('')
 
     const customAxios = axios.create({
         withCredentials: true,
@@ -68,7 +70,7 @@ const ViewElection = (props) => {
             // setUpdate(!update)
             // console.log(update)
         }).catch((er) => {
-            console.log(er)
+            //console.log(er)
             if(typeof er.response !== 'undefined') {
                 if(er.response.status === 511) {
                     dispatch({
@@ -86,7 +88,7 @@ const ViewElection = (props) => {
             if(error.response) {
                 if(error.response.status === 406) {
                     await refresh()
-                    console.log(error.config)
+                    //console.log(error.config)
                     return axios.request(error.config)
                 }
                 else if(error.response.status === 511) {
@@ -133,6 +135,24 @@ const ViewElection = (props) => {
         getElection()
     // eslint-disable-next-line
     }, [])
+
+    const handleDeleteDialogClose = () => {
+        setDeleteElectionID('')
+        setDeleteDialog(false)
+    }
+
+    async function handleDelete(id) {
+        await axios.delete("/api/election/"+id,{
+            withCredentials: true,
+        }).then((res) => {
+            if(res.status === 200) {
+                return true
+            }
+        })
+        .catch((err) => {})
+        history.push("/")
+        setDeleteDialog(false)
+    }
 
     return (
         <div>
@@ -196,6 +216,21 @@ const ViewElection = (props) => {
                                 <Grid item xs="12" lg="8" align="center">
                                     <ViewCandidates candidates={election.candidates} />
                                 </Grid>
+                                <Grid item xs="12" align="center" style={{marginTop: "1rem", marginBottom: "1rem"}}>
+                                    <Button
+                                        variant="outlined"
+                                        color="secondary"
+                                        disableElevation
+                                        onClick={
+                                            () => {
+                                                setDeleteElectionID(props.location.state)
+                                                setDeleteDialog(true)
+                                            }
+                                        }
+                                    >
+                                        DELETE ELECTION
+                                    </Button>
+                                </Grid>
                             </Grid>
                         }
                         
@@ -203,6 +238,27 @@ const ViewElection = (props) => {
                 }
                 </Paper>
             </div>
+            <Dialog
+                open={deleteDialog}
+                onClose={handleDeleteDialogClose}
+            >
+                <DialogTitle style={{minWidth: "15rem"}}>Confirm Delete</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                    { "Are you sure you want to delete the election?" }
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <div>
+                        <Button onClick={handleDeleteDialogClose} color="grey">
+                            NO
+                        </Button>
+                        <Button type="submit" onClick={()=>{handleDelete(deleteElectionID)}} color="secondary">
+                            YES
+                        </Button>
+                    </div>
+                </DialogActions>
+            </Dialog>
         </div>
     );
 }

@@ -106,7 +106,8 @@ const OTP = () => {
                 } else if(res.data.role === "1") {
                     history.push("/admin")
                 } else if(res.data.role === "2") {
-                    window.location.assign("http://localhost:8080/superadmin/")
+                    //history.push("/superadmin/")
+                    window.location.assign("https://e1ect.herokuapp.com/superadmin/")
                 }
             }
             else if(res.status === 400 || res.status === 401) {
@@ -116,7 +117,7 @@ const OTP = () => {
             setSubmitIsLoading(false)
         })
         .catch((err) => {
-            console.log(err.response)
+            //console.log(err.response)
             if(err.response) {
                 if(err.response.status === 400) {
                     setError(JSON.stringify(err.response.data.message))
@@ -154,7 +155,7 @@ const OTP = () => {
                                     <TextField
                                         onChange={ (e) => setOtp(e.target.value) }
                                         className={ classes.field }
-                                        label="otp"
+                                        label="otp - valid for 4 mins"
                                         variant="outlined"
                                         error={ otpError }
                                     />

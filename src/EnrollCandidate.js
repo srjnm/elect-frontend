@@ -78,7 +78,7 @@ export default function EnrollCandidate(props) {
             // setUpdate(!update)
             // console.log(update)
         }).catch((er) => {
-            console.log(er)
+            //console.log(er)
             if(typeof er.response !== 'undefined') {
                 if(er.response.status === 511) {
                     dispatch({
@@ -96,7 +96,7 @@ export default function EnrollCandidate(props) {
             if(error.response) {
                 if(error.response.status === 406) {
                     await refresh()
-                    console.log(error.config)
+                    //console.log(error.config)
                     return axios.request(error.config)
                 }
                 else if(error.response.status === 511) {

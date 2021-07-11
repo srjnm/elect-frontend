@@ -62,7 +62,7 @@ const CreateElectionDialog = (props) => {
         .catch((err) => {
             if(typeof err !== "undefined") {
                 if(err.response) {
-                    console.log(err.response)
+                    //console.log(err.response)
                     if(err.response.status === 400) {
                         setResponseTitle("Create Election")
                         setResponse("Failed to create election!")

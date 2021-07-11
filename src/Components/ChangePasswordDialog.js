@@ -42,7 +42,7 @@ const ChangePasswordDialog = (props) => {
             // setUpdate(!update)
             // console.log(update)
         }).catch((er) => {
-            console.log(er)
+            //console.log(er)
             if(typeof er.response !== 'undefined') {
                 if(er.response.status === 511) {
                     dispatch({
@@ -60,7 +60,7 @@ const ChangePasswordDialog = (props) => {
             if(error.response) {
                 if(error.response.status === 406) {
                     await refresh()
-                    console.log(error.config)
+                    //console.log(error.config)
                     setUpdate(!update)
                     return axios.request(error.config)
                 }
@@ -98,7 +98,7 @@ const ChangePasswordDialog = (props) => {
         .catch((err) => {
             if(err){
                 if(err.response) {
-                    console.log(err.response)
+                    //console.log(err.response)
                     if(err.response.status === 400) {
                         setResponseTitle("Change Password")
                         setResponse("Failed to change password!")

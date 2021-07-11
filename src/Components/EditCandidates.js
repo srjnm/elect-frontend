@@ -72,7 +72,7 @@ const EditCandidates = (props) => {
             // setUpdate(!update)
             // console.log(update)
         }).catch((er) => {
-            console.log(er)
+            //console.log(er)
             if(typeof er.response !== 'undefined') {
                 if(er.response.status === 511) {
                     dispatch({
@@ -90,7 +90,7 @@ const EditCandidates = (props) => {
             if(error.response) {
                 if(error.response.status === 406) {
                     await refresh()
-                    console.log(error.config)
+                    //console.log(error.config)
                     return axios.request(error.config)
                 }
                 else if(error.response.status === 511) {
@@ -204,12 +204,14 @@ const EditCandidates = (props) => {
     }
 
     // eslint-disable-next-line
-    useEffect(async () => {
+    useEffect(() => {
         if(props.electionId === "") {
             history.push("/")
         }
 
-        await getElection()
+        setElection(props.election)
+        setCandidates((typeof props.election.candidates === 'undefined')?null:props.election.candidates)
+        setLoading(false)
     // eslint-disable-next-line
     }, [])
 
@@ -222,7 +224,7 @@ const EditCandidates = (props) => {
         setPage(0)
     }
 
-    const emptyRows = (typeof props.candidates === 'undefined')?(rowsPerPage-1):(props.candidates === null)?(rowsPerPage-1):(props.candidates.length === 0 )?(rowsPerPage - 1):(rowsPerPage - Math.min(rowsPerPage, props.candidates.length - page * rowsPerPage))
+    const emptyRows = (candidates === null)?(rowsPerPage-1):(candidates.length === 0 )?(rowsPerPage - 1):(rowsPerPage - Math.min(rowsPerPage, candidates.length - page * rowsPerPage))
 
     const handleImageDialogClose = () => {
         setImageDialog(false)

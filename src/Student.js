@@ -11,6 +11,14 @@ const styles = makeStyles((theme) => ({
     root: {
         
     },
+    table: {
+        [theme.breakpoints.down('md')]: {
+            margin: "1rem"
+        },
+        [theme.breakpoints.up('md')]: {
+            margin: "3rem"
+        },
+    },
     upload: {
         letterSpacing: 0.6,
         backgroundColor: "black",
@@ -73,7 +81,7 @@ const Student = () => {
             // setUpdate(!update)
             // console.log(update)
         }).catch((er) => {
-            console.log(er)
+            //console.log(er)
             if(typeof er.response !== 'undefined') {
                 if(er.response.status === 511) {
                     dispatch({
@@ -91,7 +99,7 @@ const Student = () => {
             if(error.response) {
                 if(error.response.status === 406) {
                     await refresh()
-                    console.log(error.config)
+                    //console.log(error.config)
                     setUpdate(!update)
                     return axios.request(error.config)
                 }
@@ -108,7 +116,7 @@ const Student = () => {
     )
 
     useEffect(() => {
-        var con = new WebSocket("ws://e1ect.herokuapp.com/api/ws/election")
+        var con = new WebSocket("wss://e1ect.herokuapp.com/api/ws/election")
         con.addEventListener("message", async function(e){
             await setUpdate(update => !update)
         })
@@ -131,7 +139,7 @@ const Student = () => {
             {   
                 <Grid container className={classes.root}>
                     <Grid item xs="12" align="center">
-                        <div style={{margin: "3rem"}}>
+                        <div className={classes.table}>
                             <StudentElections render={update} />
                         </div>
                     </Grid>

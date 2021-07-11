@@ -4,6 +4,7 @@ import EnrollCandidate from "../EnrollCandidate";
 import Login from "../Login";
 import Logout from "../Logout";
 import OTP from "../OTP";
+import PageNotFound from "../PageNotFound";
 import ResetPassword from "../ResetPassword";
 import Results from "../Results";
 import SetPassword from "../SetPassword";
@@ -13,6 +14,16 @@ import Voting from "../Voting";
 import VotingPreview from "../VotingPreview";
 
 const routes = [
+    {
+        path: "/verify/:token",
+        component: SetPassword,
+        title: "Set Password",
+    },
+    {
+        path: "/resetpassword/:token",
+        component: ResetPassword,
+        title: "Reset Password",
+    },
     {
         path: "/logout",
         component: Logout,
@@ -81,14 +92,9 @@ const routes = [
         title: "Enter OTP",
     },
     {
-        path: "/resetpassword/:token",
-        component: ResetPassword,
-        title: "Reset Password",
-    },
-    {
-        path: "/verify/:token",
-        component: SetPassword,
-        title: "Set Password",
+        path: "/404",
+        component: PageNotFound,
+        title: "ELECT | Error"
     },
     {
         path: "/",

@@ -188,7 +188,7 @@ const StudentElections = (props) => {
                         <TableBody>
                             {
                                 (elections.length !== 0)?elections.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((election) => (
-                                    <TableRow>
+                                    <TableRow key={election.election_id}>
                                         <TableCell align="center">{ election.title }</TableCell>
                                         <TableCell align="center">{ moment(election.locking_at, "YYYY-MM-DD HH:mm:ss ZZ z").format("ddd Do MMM, YYYY h:mm a").toString() }</TableCell>
                                         <TableCell align="center">{ moment(election.starting_at, "YYYY-MM-DD HH:mm:ss ZZ z").format("ddd Do MMM, YYYY h:mm a").toString() }</TableCell>

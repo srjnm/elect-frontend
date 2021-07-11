@@ -86,7 +86,7 @@ function AdminRegister() {
                       }).then((updt) => {
                           setUpdate(updt)
                       }).catch((er) => {
-                          console.log(er)
+                          //console.log(er)
                       })
                   }
                   else if(error.response.status === 511) {

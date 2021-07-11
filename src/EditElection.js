@@ -62,6 +62,8 @@ const EditElection = (props) => {
     const [file, setFile] = useState(null)
     const [uploadComplete, setUploadComplete] = useState(false)
     const [addedParticipant, setAddedParticipant] = useState(false)
+    const [deleteDialog, setDeleteDialog] = useState(false)
+    const [deleteElectionID, setDeleteElectionID] = useState('')
 
     const customAxios = axios.create({
         withCredentials: true,
@@ -79,7 +81,7 @@ const EditElection = (props) => {
             // setUpdate(!update)
             // console.log(update)
         }).catch((er) => {
-            console.log(er)
+            //console.log(er)
             if(typeof er.response !== 'undefined') {
                 if(er.response.status === 511) {
                     dispatch({
@@ -97,7 +99,7 @@ const EditElection = (props) => {
             if(error.response) {
                 if(error.response.status === 406) {
                     await refresh()
-                    console.log(error.config)
+                    //console.log(error.config)
                     return axios.request(error.config)
                 }
                 else if(error.response.status === 511) {
@@ -189,7 +191,7 @@ const EditElection = (props) => {
         .catch((err) => {
             if(typeof err !== "undefined") {
                 if(err.response) {
-                    console.log(err.response)
+                    //console.log(err.response)
                     if(err.response.status === 400) {
                         setResponseTitle("Edit Election")
                         setResponse("Failed to edit election!")
@@ -247,8 +249,8 @@ const EditElection = (props) => {
             setParticipantsRespLoading(false)
             setUploadComplete(false)
             setFile(null)
-            setResponseDialog(true)
             setAddedParticipant(!addedParticipant)
+            setResponseDialog(true)
         }).catch((error) => {
             if(typeof error !== 'undefined') {
                 if(error.status === 400){
@@ -274,6 +276,24 @@ const EditElection = (props) => {
     const onFileChange = (e) => {
         setFile(e.target.files[0])
         setUploadComplete(true)
+    }
+
+    const handleDeleteDialogClose = () => {
+        setDeleteElectionID('')
+        setDeleteDialog(false)
+    }
+
+    async function handleDelete(id) {
+        await axios.delete("/api/election/"+id,{
+            withCredentials: true,
+        }).then((res) => {
+            if(res.status === 200) {
+                return true
+            }
+        })
+        .catch((err) => {})
+        history.push("/")
+        setDeleteDialog(false)
     }
 
     return ( 
@@ -388,13 +408,37 @@ const EditElection = (props) => {
                     </Paper>
                 </Grid>
                 <Grid item xs="12" md="7" align="center">
-                    <EditCandidates electionId={props.location.state} />
+                    { 
+                        loading && <div style={{height: "100%",}}>
+                            <Grid container alignItems="center" style={{height: "100%"}}>
+                                <Grid item xs="12" align="center">
+                                    <CircularProgress variant="indeterminate" />
+                                </Grid>
+                            </Grid>
+                        </div>
+                    }
+                    {
+                        !loading &&
+                        <EditCandidates electionId={props.location.state} election={election} />
+                    }
                 </Grid>
                 <Grid item xs="12" align="center">
-                    <EditParticipants electionId={props.location.state} addedParticipant={addedParticipant} />
+                    { 
+                        loading && <div style={{height: "100%",}}>
+                            <Grid container alignItems="center" style={{height: "400px"}}>
+                                <Grid item xs="12" align="center">
+                                    <CircularProgress variant="indeterminate" />
+                                </Grid>
+                            </Grid>
+                        </div>
+                    }
+                    {
+                        !loading &&
+                        <EditParticipants electionId={props.location.state} election={election} addedParticipant={addedParticipant} />
+                    }
                 </Grid>
                 <Grid item xs="12" align="center">
-                    <div style={{maxWidth: "400px", minWidth: "400px"}}>
+                    <div style={{maxWidth: "400px", minWidth: "300px"}}>
                         <Paper style={{paddingBottom: "1.2rem", paddingTop: "1.2rem"}}>
                             <form noValidate onSubmit={handleRegisterSubmit}>
                                 <Grid container justify="center" alignItems="center" alignContent="center">
@@ -456,6 +500,22 @@ const EditElection = (props) => {
                         </Paper>
                     </div>
                 </Grid>
+                <Grid item xs="12" align="center" style={{marginBottom: "2rem"}}>
+                    <Button
+                        variant="outlined"
+                        color="secondary"
+                        disableElevation
+                        style={{backgroundColor: "white"}}
+                        onClick={
+                            () => {
+                                setDeleteElectionID(props.location.state)
+                                setDeleteDialog(true)
+                            }
+                        }
+                    >
+                        DELETE ELECTION
+                    </Button>
+                </Grid>
             </Grid>
             <Dialog
                 open={responseDialog}
@@ -471,6 +531,27 @@ const EditElection = (props) => {
                     <Button onClick={handleResponseDialogClose} color="primary">
                         Okay
                     </Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog
+                open={deleteDialog}
+                onClose={handleDeleteDialogClose}
+            >
+                <DialogTitle style={{minWidth: "15rem"}}>Confirm Delete</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                    { "Are you sure you want to delete the election?" }
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <div>
+                        <Button onClick={handleDeleteDialogClose} color="grey">
+                            NO
+                        </Button>
+                        <Button type="submit" onClick={()=>{handleDelete(deleteElectionID)}} color="secondary">
+                            YES
+                        </Button>
+                    </div>
                 </DialogActions>
             </Dialog>
         </div>

@@ -8,8 +8,9 @@ const Logout = () => {
     const history = useHistory()
     const { dispatch } = useContext(AuthContext)
 
-    useEffect(() => {
-        axios.post("/logout",
+    // eslint-disable-next-line
+    useEffect(async () => {
+        await axios.post("/slogout",
             {},
             {
                 withCredentials: true,
@@ -23,11 +24,7 @@ const Logout = () => {
             }
         })
         .catch((err) => {
-            console.log(err)
-            dispatch({
-                type: "LOGOUT_SUCCESS",
-            })
-            history.push("/")
+            //console.log(err)
         })
     // eslint-disable-next-line
     }, [])

@@ -13,10 +13,10 @@ const styles = makeStyles((theme) => ({
     paper: {
         padding: "3rem",
         [theme.breakpoints.down('md')]: {
-            marginTop: "3rem",
-            marginBottom: "4rem",
-            marginLeft: "2rem",
-            marginRight: "2rem",
+            marginTop: "1.5rem",
+            marginBottom: "2rem",
+            marginLeft: "1rem",
+            marginRight: "1rem",
         },
         [theme.breakpoints.up('md')]: {
             marginTop: "3rem",
@@ -75,7 +75,7 @@ const Voting = (props) => {
             // setUpdate(!update)
             // console.log(update)
         }).catch((er) => {
-            console.log(er)
+            //console.log(er)
             if(typeof er.response !== 'undefined') {
                 if(er.response.status === 511) {
                     dispatch({
@@ -93,7 +93,7 @@ const Voting = (props) => {
             if(error.response) {
                 if(error.response.status === 406) {
                     await refresh()
-                    console.log(error.config)
+                    //console.log(error.config)
                     return axios.request(error.config)
                 }
                 else if(error.response.status === 511) {
@@ -135,7 +135,7 @@ const Voting = (props) => {
         .catch((err) => {
             if(typeof err !== "undefined") {
                 if(err.response) {
-                    console.log(err.response)
+                    //console.log(err.response)
                     if(err.response.status === 400) {
                         setResponseTitle("Cast Vote")
                         setResponse("Failed to cast the vote!")

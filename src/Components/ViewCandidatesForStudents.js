@@ -7,8 +7,10 @@ const useStyles = makeStyles((theme) => ({
     },
     table: {
         maxWidth: 800,
-        marginLeft: "1rem",
-        marginRight: "1rem"
+        [theme.breakpoints.up('md')]: {
+            marginLeft: "1rem",
+            marginRight: "1rem",
+        },
     },
     viewButton: {
         backgroundColor: "#333333",

@@ -101,7 +101,7 @@ const ResetPassword = () => {
             setSubmitIsLoading(false)
         })
         .catch((err) => {
-            console.log(err.response)
+            //console.log(err.response)
             if(err.response) {
                 if(err.response.status === 400) {
                     setError(err.response.data.message)
@@ -135,7 +135,7 @@ const ResetPassword = () => {
             setSubmitIsLoading(false)
         })
         .catch((err) => {
-            console.log(err.response)
+            //console.log(err.response)
             if(err.response) {
                 if(err.response.status === 400) {
                     if(err.response.data.message === 'Reset Token Expired!') {

@@ -65,7 +65,7 @@ const Header = (props) => {
     const handleLogout = (e) => {
         e.preventDefault()
 
-        axios.post("/logout",
+        axios.post("/ulogout",
             {},
             {
                 withCredentials: true,
@@ -75,11 +75,11 @@ const Header = (props) => {
                 dispatch({
                     type: "LOGOUT_SUCCESS",
                 })
-                history.push("/")
+                window.location.assign("https://e1ect.herokuapp.com/")
             }
         })
         .catch((err) => {
-            console.log(err)
+            //console.log(err)
         })
     }
 

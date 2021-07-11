@@ -19,6 +19,12 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: "#444444"
         },
     },
+    main: {
+        [theme.breakpoints.up('md')]: {
+            marginLeft: "1rem",
+            marginRight: "1rem",
+        },
+    }
 }))
 
 const YourCandidateEntry = (props) => {
@@ -40,7 +46,7 @@ const YourCandidateEntry = (props) => {
 
     return (
         <div>
-            <TableContainer component={Paper} elevation="3" style={{backgroundColor: "#fdfdfd", maxWidth: 800, marginLeft: "1rem", marginRight: "1rem"}}>
+            <TableContainer component={Paper} elevation="3" className={classes.main} style={{backgroundColor: "#fdfdfd", maxWidth: 800,}}>
                 <Table>
                     <TableHead className={classes.tbhead}>
                         <TableRow>

@@ -1,4 +1,5 @@
-import {makeStyles, Grid, Typography} from '@material-ui/core'
+import {makeStyles, Grid, Typography, Button} from '@material-ui/core'
+import { useHistory } from 'react-router-dom'
 
 const styles = makeStyles((theme) => ({
     root: {
@@ -41,6 +42,8 @@ const styles = makeStyles((theme) => ({
 const PageNotFound = () => {
     const classes = styles()
 
+    const history = useHistory()
+
     return (
         <div>
             <Grid container direction="column" className={classes.root}>
@@ -60,6 +63,11 @@ const PageNotFound = () => {
                                     <Typography color="primary" style={{fontFamily: "Teko", fontSize: 29}}>
                                         ERROR 404
                                     </Typography>
+                                </Grid>
+                                <Grid item xs="12">
+                                    <Button disableElevation variant="contained" color="primary" style={{fontWeight: "bold"}} onClick={() => {history.push("/")}}>
+                                        HOME
+                                    </Button>
                                 </Grid>
                             </Grid>
                         </form>

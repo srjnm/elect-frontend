@@ -1,8 +1,10 @@
 import { Dialog, DialogContent, makeStyles, LinearProgress, Grid, Radio, RadioGroup, DialogTitle, DialogContentText, DialogActions, Button, FormControl, FormControlLabel } from '@material-ui/core';
 import * as Yup from 'yup';
 import { Form, Formik } from "formik";
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import axios from 'axios'
+import { useHistory } from "react-router"
+import { AuthContext } from '../Context/AuthContext'
 
 const styles = makeStyles((theme) => ({
     upload: {
@@ -30,6 +32,9 @@ const styles = makeStyles((theme) => ({
 const EnrollCandidateDialog = (props) => {
     const classes = styles()
 
+    const history = useHistory()
+    const { dispatch } = useContext(AuthContext)
+
     const [responseDialog, setResponseDialog] = useState(false)
     const [responseTitle, setResponseTitle] = useState('')
     const [response, setResponse] = useState('')
@@ -38,6 +43,55 @@ const EnrollCandidateDialog = (props) => {
     const [dpUploadComplete, setDpUploadComplete] = useState(false)
     const [posterUploadComplete, setPosterUploadComplete] = useState(false)
     const [idUploadComplete, setIdUploadComplete] = useState(false)
+
+    const customAxios = axios.create({
+        withCredentials: true,
+    })
+
+    const refresh = async () => {
+        await customAxios.post(
+            "/refresh",
+        ).then((resp) => {
+            if(resp.status === 200){
+                return true
+            }
+        }).then((updt) => {
+            // console.log(update)
+            // setUpdate(!update)
+            // console.log(update)
+        }).catch((er) => {
+            //console.log(er)
+            if(typeof er.response !== 'undefined') {
+                if(er.response.status === 511) {
+                    dispatch({
+                        type: "LOGOUT_SUCCESS",
+                    })
+                    history.push("/")
+                }
+            }
+        })
+    }
+
+    axios.interceptors.response.use(
+        null,
+        async (error) => {
+            if(error.response) {
+                if(error.response.status === 406 || error.response.status === 503) {
+                    await refresh()
+                    //console.log(error.config)
+                    return axios.request(error.config)
+                }
+                else if(error.response.status === 511) {
+                    dispatch({
+                        type: "LOGOUT_SUCCESS",
+                    })
+                    history.push("/")
+                }
+            }
+            
+            return Promise.reject(error.config)
+        }
+    )
 
     const validationSchema = Yup.object({
         election_id: Yup
@@ -88,7 +142,7 @@ const EnrollCandidateDialog = (props) => {
     const handleEnrollAsCandidate = (values) => {
         setResponseIsLoading(true)
 
-        console.log(values)
+        //console.log(values)
         const formData = new FormData()
         formData.append("election_id", values.election_id)
         formData.append("sex", values.sex)
@@ -114,7 +168,7 @@ const EnrollCandidateDialog = (props) => {
         }).catch((err) => {
             if(typeof err !== "undefined") {
                 if(err.response) {
-                    console.log(err.response)
+                    //console.log(err.response)
                     if(err.response.status === 400) {
                         setResponseTitle("Create Election")
                         setResponse("Failed to create election!")
@@ -133,6 +187,7 @@ const EnrollCandidateDialog = (props) => {
         setPosterUploadComplete(false)
         setIdUploadComplete(false)
         props.setDialog(false)
+        setResponseIsLoading(false)
     }
 
     const handleResponseDialogClose = () => {

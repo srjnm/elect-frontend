@@ -1,4 +1,4 @@
-import { Grid, CircularProgress, makeStyles, Paper } from "@material-ui/core";
+import { Grid, CircularProgress, makeStyles, Paper, Button } from "@material-ui/core";
 import Header from "./Components/Header"
 import { useHistory } from "react-router"
 import { AuthContext } from './Context/AuthContext'
@@ -12,7 +12,12 @@ import axios from 'axios'
 const styles = makeStyles((theme) => ({
     paper: {
         // minHeight: "66vh",
-        margin: "3rem",
+        [theme.breakpoints.down('md')]: {
+            margin: "1rem"
+        },
+        [theme.breakpoints.up('md')]: {
+            margin: "3rem"
+        },
         padding: "1rem",
         paddingTop: "1rem",
         paddingBottom: "3rem"
@@ -51,7 +56,7 @@ const Results = (props) => {
             // setUpdate(!update)
             // console.log(update)
         }).catch((er) => {
-            console.log(er)
+            //console.log(er)
             if(typeof er.response !== 'undefined') {
                 if(er.response.status === 511) {
                     dispatch({
@@ -69,7 +74,7 @@ const Results = (props) => {
             if(error.response) {
                 if(error.response.status === 406) {
                     await refresh()
-                    console.log(error.config)
+                    //console.log(error.config)
                     return axios.request(error.config)
                 }
                 else if(error.response.status === 511) {
@@ -83,6 +88,15 @@ const Results = (props) => {
             return Promise.reject(error.config)
         }
     )
+
+    const handleViewElection = (id) => {
+        history.push(
+            {
+                pathname: "/view",
+                state: id,
+            }
+        )
+    }
 
     const getElectionResults = async () => {
         axios.get(
@@ -131,15 +145,23 @@ const Results = (props) => {
                 {
                     !loading &&
                     <Grid container style={{height: "100%"}} alignItems="center">
-                        <Grid item xs="12" style={{marginTop: "30px", marginBottom: "50px"}}>
+                        <Grid item xs="12" style={{marginTop: "30px", marginBottom: "10px"}}>
                             <Typography align="center" variant="h5" style={{fontWeight: "300"}}>
                                 ELECTION RESULTS
                             </Typography>
                             <Typography align="center" variant="h4" style={{fontWeight: "700"}}>
                                 {results.title}
+                                <Typography variant="subtitle1">
+                                    {(results.gender_specific)?" [Gender Specific]":""}
+                                </Typography>
                             </Typography>
                         </Grid>
-                        <Grid item xs="12">
+                        <Grid item xs="12" align="center">
+                            <Button variant="outlined" color="action" onClick={() => {handleViewElection(props.location.state)}} >
+                                ELECTION DETAILS
+                            </Button>
+                        </Grid>
+                        <Grid item xs="12" style={{marginTop: "1rem"}}>
                             {
                                 (!results.gender_specific && results.candidate_results)?<div>{results.candidate_results.map((candidate) => {
                                     return (
@@ -159,10 +181,10 @@ const Results = (props) => {
                                 {
                                     (results.total_participants !== 0 )?(
                                         <Grid item container style={{fontWeight: "900", marginTop: "3.5rem"}}>
-                                            <Grid item xs="6" align="center">
+                                            <Grid item xs="12" md="6" align="center">
                                                 TOTAL VOTES: {results.total_votes}
                                             </Grid>
-                                            <Grid item xs="6" align="center">
+                                            <Grid item xs="12" md="6" align="center">
                                                 TOTAL PARTICIPANTS: {results.total_participants}
                                             </Grid>
                                         </Grid>
@@ -176,9 +198,9 @@ const Results = (props) => {
                                 (results.gender_specific && (results.mcandidate_results || results.fcandidate_results || results.ocandidate_results))?<div>
                                     {
                                         (results.mcandidate_results && results.mcandidate_results.length !== 0)?
-                                        <div>
-                                            <Typography variant="h5">
-                                                MALE CANDIDATES
+                                        <div style={{marginBottom: "2rem"}}>
+                                            <Typography variant="h5" align="center" style={{fontWeight: 700, marginBottom: "15px"}}>
+                                                Male Candidates
                                             </Typography>
                                             {
                                                 results.mcandidate_results.map((candidate) => {
@@ -188,7 +210,7 @@ const Results = (props) => {
                                                                 {candidate.name}
                                                             </Grid>
                                                             <Grid item align="center" xs="7">
-                                                                <ResultBar className={classes.resultBar} variant="determinate" value={Math.floor((candidate.votes/results.participants.length)*100)} />
+                                                                <ResultBar className={classes.resultBar} variant="determinate" value={Math.floor((candidate.votes/results.total_participants)*100)} />
                                                             </Grid>
                                                             <Grid item align="center" xs="2" style={{fontWeight: "bold", margin: "auto"}}>
                                                                 {candidate.votes}
@@ -202,10 +224,10 @@ const Results = (props) => {
                                         <div />
                                     }
                                     {
-                                        (results.mcandidate_results && results.mcandidate_results.length !== 0)?
-                                        <div>
-                                            <Typography variant="h5">
-                                                FEMALE CANDIDATES
+                                        (results.fcandidate_results && results.fcandidate_results.length !== 0)?
+                                        <div style={{marginBottom: "2rem"}}>
+                                            <Typography variant="h5"  align="center" style={{fontWeight: 700, marginTop: "2rem", marginBottom: "15px"}}>
+                                                Female Candidates
                                             </Typography>
                                             {
                                                 results.fcandidate_results.map((candidate) => {
@@ -215,7 +237,7 @@ const Results = (props) => {
                                                                 {candidate.name}
                                                             </Grid>
                                                             <Grid item align="center" xs="7">
-                                                                <ResultBar className={classes.resultBar} variant="determinate" value={Math.floor((candidate.votes/results.participants.length)*100)} />
+                                                                <ResultBar className={classes.resultBar} variant="determinate" value={Math.floor((candidate.votes/results.total_participants)*100)} />
                                                             </Grid>
                                                             <Grid item align="center" xs="2" style={{fontWeight: "bold", margin: "auto"}}>
                                                                 {candidate.votes}
@@ -229,10 +251,10 @@ const Results = (props) => {
                                         <div />
                                     }
                                     {
-                                        (results.mcandidate_results && results.mcandidate_results.length !== 0)?
-                                        <div>
-                                            <Typography variant="h5">
-                                                OTHER CANDIDATES
+                                        (results.ocandidate_results && results.ocandidate_results.length !== 0)?
+                                        <div style={{marginBottom: "2rem"}}>
+                                            <Typography variant="h5"  align="center" style={{fontWeight: 700, marginTop: "2rem", marginBottom: "15px"}}>
+                                                Other Candidates
                                             </Typography>
                                             {
                                                 results.ocandidate_results.map((candidate) => {
@@ -242,7 +264,7 @@ const Results = (props) => {
                                                                 {candidate.name}
                                                             </Grid>
                                                             <Grid item align="center" xs="7">
-                                                                <ResultBar className={classes.resultBar} variant="determinate" value={Math.floor((candidate.votes/results.participants.length)*100)} />
+                                                                <ResultBar className={classes.resultBar} variant="determinate" value={Math.floor((candidate.votes/results.total_participants)*100)} />
                                                             </Grid>
                                                             <Grid item align="center" xs="2" style={{fontWeight: "bold", margin: "auto"}}>
                                                                 {candidate.votes}
@@ -254,6 +276,18 @@ const Results = (props) => {
                                         </div>
                                         :
                                         <div />
+                                    }
+                                    {
+                                        (results.total_participants !== 0 )?(
+                                            <Grid item container style={{fontWeight: "900", marginTop: "3.5rem"}}>
+                                                <Grid item xs="12" md="6" align="center">
+                                                    TOTAL VOTES: {results.total_votes}
+                                                </Grid>
+                                                <Grid item xs="12" md="6" align="center">
+                                                    TOTAL PARTICIPANTS: {results.total_participants}
+                                                </Grid>
+                                            </Grid>
+                                        ):(<div />)
                                     }
                                 </div>
                                 :
