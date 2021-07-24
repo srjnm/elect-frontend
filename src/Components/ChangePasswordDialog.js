@@ -102,7 +102,6 @@ const ChangePasswordDialog = (props) => {
                     if(err.response.status === 400) {
                         setResponseTitle("Change Password")
                         setResponse("Failed to change password!")
-                        props.setRender(!props.render)
                         props.setDialog(false)
                     }
                 }

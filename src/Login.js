@@ -216,6 +216,7 @@ const Login = (props) => {
                                         type="email"
                                         label="email"
                                         variant="outlined"
+                                        required
                                         error={ emailError }
                                     />
                                 </Grid>
@@ -225,6 +226,7 @@ const Login = (props) => {
                                         label="password"
                                         type="password"
                                         variant="outlined"
+                                        required
                                         error={ passwordError }
                                     />
                                 </Grid>
